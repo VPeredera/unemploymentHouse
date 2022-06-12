@@ -1,4 +1,4 @@
-package domain;
+package com.unemploymenthouse.unemploymenthouse.domain;
 
 import org.joda.money.Money;
 
@@ -43,7 +43,7 @@ public class Jobs implements Serializable {
     @JoinColumn(name = "id_employer", nullable = false)
     private Employer employerJobs;
 
-    @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "jobsOffer", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Offers> offersJob;
 

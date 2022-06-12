@@ -1,4 +1,4 @@
-package domain;
+package com.unemploymenthouse.unemploymenthouse.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,14 +25,14 @@ public class Specialty implements Serializable {
     @Column(name = "specialty_code")
     private int specialtyCode;
 
-    @ManyToMany(mappedBy = "specialty", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "specialties", fetch = FetchType.LAZY)
     private Set<Unemployed> unemployedSpec = new HashSet<>();
 
-    @OneToMany(mappedBy = "specialty", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "specialtyReeducation", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Reeducation> reeducationSpecialty;
 
-    @OneToMany(mappedBy = "specialty", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "specialtyJobs", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Jobs> jobsSpecialty;
 

@@ -1,5 +1,6 @@
-package domain;
+package com.unemploymenthouse.unemploymenthouse.domain;
 
+import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import org.joda.money.Money;
 
 import javax.persistence.*;

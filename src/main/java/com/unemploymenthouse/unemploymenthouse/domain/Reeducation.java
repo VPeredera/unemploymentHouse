@@ -1,4 +1,7 @@
-package domain;
+package com.unemploymenthouse.unemploymenthouse.domain;
+
+import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
+import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,7 +28,7 @@ public class Reeducation implements Serializable {
     @Column(name = "end_date")
     private java.sql.Date endDate;
 
-    @ManyToMany(mappedBy = "reeducation", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "reeducations", fetch = FetchType.LAZY)
     private Set<Unemployed> unemployedReeducation = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

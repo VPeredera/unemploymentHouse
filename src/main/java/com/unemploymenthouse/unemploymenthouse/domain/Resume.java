@@ -1,4 +1,6 @@
-package domain;
+package com.unemploymenthouse.unemploymenthouse.domain;
+
+import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 
 import javax.persistence.*;
 import java.io.Serializable;

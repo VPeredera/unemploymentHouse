@@ -1,4 +1,4 @@
-package domain;
+package com.unemploymenthouse.unemploymenthouse.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -54,15 +54,15 @@ public class Unemployed implements Serializable {
                             nullable = false, updatable = false)})
     private Set<Specialty> specialties = new HashSet<>();
 
-    @OneToMany(mappedBy = "unemployed", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "unemployedResume", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Resume> resumes;
 
-    @OneToMany(mappedBy = "unemployed", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "unemployedBenefit", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<UnemploymentBenefits> benefits;
 
-    @OneToMany(mappedBy = "unemployed", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "unemployedOffer", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Offers> offersUnemployed;
 
