@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Unemployed</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Manage Unemployed</h2></div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Full name</th>
+                    <th>Birthday</th>
+                    <th>Place of residence</th>
+                    <th>Criminal record</th>
+                    <th>Contact information</th>
+                    <th>Registration date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="unemployed : ${listUnemployed}">
+                <tr>
+                    <td>[[${unemployed.idUnemployed}</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
