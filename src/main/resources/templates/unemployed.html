@@ -5,24 +5,32 @@
     <title>Manage Unemployed</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
+<style>
+    body {
+        background-color: #c2a064;
+    }
+</style>
 <body>
 <div class="container-fluid text-center">
-    <div><h2>Manage Unemployed</h2></div>
+    <div><h2>Список безробітних</h2></div>
     <div class="m-2">
-        <a class="h3" th:href="@{/unemployed/new}">Add new unemployed</a>
+        <a class="h3" th:href="@{/unemployed/new}">Додати запис</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
     </div>
     <div>
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Full name</th>
-                    <th>Birthday</th>
-                    <th>Place of residence</th>
-                    <th>Criminal record</th>
-                    <th>Contact information</th>
-                    <th>Registration date</th>
-                    <th>Status</th>
+                    <th>Ім'я Прізвище</th>
+                    <th>Дата народження</th>
+                    <th>Місце проживання</th>
+                    <th>Судимість</th>
+                    <th>Контактні дані</th>
+                    <th>Дана постановки на облік</th>
+                    <th>Статус</th>
                     <th></th>
                 </tr>
             </thead>
@@ -36,6 +44,7 @@
                     <td>[[${unemployed.criminalRecord}]]</td>
                     <td>[[${unemployed.contactInformation}]]</td>
                     <td>[[${unemployed.registrationDate}]]</td>
+                    <td>[[${unemployed.status}]]</td>
                     <td>
                         <a class="h4 mr-3" th:href="@{'/unemployed/edit/' + ${unemployed.idUnemployed}}">Edit</a>
                         <a class="h4" th:href="@{'/unemployed/delete/' + ${unemployed.idUnemployed}}">Delete</a>
