@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Employers</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<style>
+    body {
+        background-color: #c2a064;
+    }
+</style>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Список роботодавців</h2></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/employer/new}">Додати запис</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Ім'я Прізвище роботодавця</th>
+                    <th>Назва підприємства</th>
+                    <th>Вид діяльності</th>
+                    <th>Місце розташування</th>
+                    <th>Контактні дані роботодавця</th>
+                    <th>Кількість вакансій</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="employer : ${listEmployer}">
+                <tr>
+                    <td>[[${employer.idEmployer}]]</td>
+                    <td>[[${employer.employerFullName}]]</td>
+                    <td>[[${employer.companyName}]]</td>
+                    <td>[[${employer.typeOfActivity}]]</td>
+                    <td>[[${employer.companyLocation}]]</td>
+                    <td>[[${employer.employerContact}]]</td>
+                    <td>[[${employer.jobVacancies}]]</td>
+                    <td>
+                        <a class="h4 mr-3" th:href="@{'/employer/edit/' + ${employer.idEmployer}}">Edit</a>
+                        <a class="h4" th:href="@{'/employer/delete/' + ${employer.idEmployer}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
