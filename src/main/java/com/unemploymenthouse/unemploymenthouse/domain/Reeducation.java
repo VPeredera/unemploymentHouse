@@ -1,5 +1,6 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 
@@ -29,11 +30,21 @@ public class Reeducation implements Serializable {
     private java.sql.Date endDate;
 
     @ManyToMany(mappedBy = "reeducations", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Unemployed> unemployedReeducation = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_spec", nullable = false)
     private Specialty specialtyReeducation;
+
+    /**many to many methods*/
+    public Set<Unemployed> getUnemployed(){
+        return unemployedReeducation;
+    }
+
+    public void setUnemployed(Set<Unemployed> unemployedReeducation){
+        this.unemployedReeducation = unemployedReeducation;
+    }
 
     public Integer getIdReeduc() {
         return this.idReeduc;

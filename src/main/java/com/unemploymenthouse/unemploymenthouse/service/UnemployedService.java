@@ -6,12 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.unemploymenthouse.unemploymenthouse.repository.UnemployedRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UnemployedService {
     @Autowired private UnemployedRepository unemployedRepository;
+
+    public static <E> List<E> makeCollection(Iterable<E> iter) {
+        List<E> list = new ArrayList<E>();
+        for (E item : iter) {
+            list.add(item);
+        }
+        return list;
+    }
 
     public List<Unemployed> listAll() {
         return (List<Unemployed>) unemployedRepository.findAll();

@@ -1,0 +1,39 @@
+package com.unemploymenthouse.unemploymenthouse.service;
+
+import com.unemploymenthouse.unemploymenthouse.domain.UnemploymentBenefits;
+import com.unemploymenthouse.unemploymenthouse.exception.BenefitsNotFoundException;
+import com.unemploymenthouse.unemploymenthouse.repository.BenefitsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class BenefitsService {
+    @Autowired private BenefitsRepository benefitsRepository;
+
+    public List<UnemploymentBenefits> listAll() {
+        return (List<UnemploymentBenefits>) benefitsRepository.findAll();
+    }
+
+    public void save(UnemploymentBenefits benefits){
+        benefitsRepository.save(benefits);
+    }
+
+    public UnemploymentBenefits get(Integer id) throws BenefitsNotFoundException {
+        Optional<UnemploymentBenefits> result = benefitsRepository.findById(id);
+        if(result.isPresent()){
+            return result.get();
+        }
+        throw new BenefitsNotFoundException("Немає виплат з ID: " + id);
+    }
+
+    public void delete(Integer id) throws BenefitsNotFoundException {
+        Long count = benefitsRepository.countByIdBenefit(id);
+        if(count == null || count == 0){
+            throw new BenefitsNotFoundException("Немає виплат з ID: " + id);
+        }
+        benefitsRepository.deleteById(id);
+    }
+}

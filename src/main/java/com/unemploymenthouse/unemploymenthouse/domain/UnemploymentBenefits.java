@@ -1,6 +1,5 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
-import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import org.joda.money.Money;
 
 import javax.persistence.*;
@@ -14,9 +13,6 @@ public class UnemploymentBenefits implements Serializable {
     @Column(name = "id_benefit")
     private Integer idBenefit;
 
-//    @Column(name = "id_unemployed")
-//    private Integer idUnemployed;
-
     @Column(name = "date_payment")
     private java.sql.Date datePayment;
 
@@ -24,11 +20,19 @@ public class UnemploymentBenefits implements Serializable {
     private int daysOnRecord;
 
     @Column(name = "payment_amount")
-    private Money paymentAmount;
+    private double paymentAmount;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_unemployed", nullable = false)
     private Unemployed unemployedBenefit;
+
+    public Unemployed getUnemployedBenefit() {
+        return unemployedBenefit;
+    }
+
+    public void setUnemployedBenefit(Unemployed unemployedBenefit) {
+        this.unemployedBenefit = unemployedBenefit;
+    }
 
     public Integer getIdBenefit() {
         return this.idBenefit;
@@ -37,14 +41,6 @@ public class UnemploymentBenefits implements Serializable {
     public void setIdBenefit(Integer idBenefit) {
         this.idBenefit = idBenefit;
     }
-
-//    public Integer getIdUnemployed() {
-//        return this.idUnemployed;
-//    }
-//
-//    public void setIdUnemployed(Integer idUnemployed) {
-//        this.idUnemployed = idUnemployed;
-//    }
 
     public java.sql.Date getDatePayment() {
         return this.datePayment;
@@ -62,11 +58,11 @@ public class UnemploymentBenefits implements Serializable {
         this.daysOnRecord = daysOnRecord;
     }
 
-    public Money getPaymentAmount() {
+    public double getPaymentAmount() {
         return this.paymentAmount;
     }
 
-    public void setPaymentAmount(Money paymentAmount) {
+    public void setPaymentAmount(double paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 }

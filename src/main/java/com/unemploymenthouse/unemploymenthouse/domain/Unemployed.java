@@ -66,6 +66,20 @@ public class Unemployed implements Serializable {
             cascade = CascadeType.ALL)
     private Set<Offers> offersUnemployed;
 
+    /**many to many methods*/
+    public void addReeducation(Reeducation reeducation){
+        this.reeducations.add(reeducation);
+        reeducation.getUnemployed().add(this);
+    }
+
+    public void removeReeducation(long reeducationId){
+        Reeducation reeducation = this.reeducations.stream().filter(reeduc -> reeduc.getIdReeduc() == reeducationId).findFirst().orElse(null);
+        if(reeducation != null){
+            this.reeducations.remove(reeducation);
+            reeducation.getUnemployed().remove(this);
+        }
+    }
+
     public Integer getIdUnemployed() {
         return this.idUnemployed;
     }

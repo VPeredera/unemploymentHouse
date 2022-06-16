@@ -1,7 +1,5 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
-import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,9 +10,6 @@ public class Resume implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_resume")
     private Integer idResume;
-
-//    @Column(name = "id_unemployed")
-//    private Integer idUnemployed;
 
     @Column(name = "date_record")
     private java.sql.Date dateRecord;
@@ -29,6 +24,14 @@ public class Resume implements Serializable {
     @JoinColumn(name = "id_unemployed", nullable = false)
     private Unemployed unemployedResume;
 
+    public Unemployed getUnemployedResume() {
+        return unemployedResume;
+    }
+
+    public void setUnemployedResume(Unemployed unemployedResume) {
+        this.unemployedResume = unemployedResume;
+    }
+
     public Integer getIdResume() {
         return this.idResume;
     }
@@ -37,13 +40,6 @@ public class Resume implements Serializable {
         this.idResume = idResume;
     }
 
-//    public Integer getIdUnemployed() {
-//        return this.idUnemployed;
-//    }
-//
-//    public void setIdUnemployed(Integer idUnemployed) {
-//        this.idUnemployed = idUnemployed;
-//    }
 
     public java.sql.Date getDateRecord() {
         return this.dateRecord;
