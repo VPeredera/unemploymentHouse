@@ -31,6 +31,7 @@
                     <th>Контактні дані</th>
                     <th>Дана постановки на облік</th>
                     <th>Статус</th>
+                    <th>Спеціальність</th>
                     <th></th>
                 </tr>
             </thead>
@@ -45,6 +46,7 @@
                     <td>[[${unemployed.contactInformation}]]</td>
                     <td>[[${unemployed.registrationDate}]]</td>
                     <td>[[${unemployed.status}]]</td>
+                    <td>[[${unemployed.specialties}]]</td>
                     <td>
                         <a class="h4 mr-3" th:href="@{'/unemployed/edit/' + ${unemployed.idUnemployed}}">Edit</a>
                         <a class="h4" th:href="@{'/unemployed/delete/' + ${unemployed.idUnemployed}}">Delete</a>

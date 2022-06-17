@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Reeducation</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<style>
+    body {
+        background-color: #c2a064;
+    }
+</style>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Список перенавчань</h2></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/reeducation/new}">Додати запис</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Заклад освіти</th>
+                <th>Дата початку</th>
+                <th>Дата закінчення</th>
+                <th>Спеціальність перенавчання</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="reeducation : ${listReeducation}">
+                <tr>
+                    <td>[[${reeducation.idReeduc}]]</td>
+                    <td>[[${reeducation.educInstitution}]]</td>
+                    <td>[[${reeducation.startDate}]]</td>
+                    <td>[[${reeducation.endDate}]]</td>
+                    <td>[[${reeducation.specialtyReeducation.specialtyName}]]</td>
+                    <td>
+                        <a class="h4 mr-3" th:href="@{'/reeducation/edit/' + ${reeducation.idReeduc}}">Edit</a>
+                        <a class="h4" th:href="@{'/reeducation/delete/' + ${reeducation.idReeduc}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <div class="m-2">
+        <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Назад</button>
+    </div>
+</div>
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/}]]";
+    }
+</script>
+</body>
+</html>

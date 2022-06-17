@@ -1,7 +1,9 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
+import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import com.unemploymenthouse.unemploymenthouse.exception.UnemployedNotFoundException;
+import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import java.util.List;
 @Controller
 public class UnemployedController {
     @Autowired private UnemployedService unemployedService;
+    @Autowired private SpecialtyService specialtyService;
 
     @GetMapping("/unemployed")
     public String showUnemployedList(Model model) {
@@ -26,6 +29,8 @@ public class UnemployedController {
 
     @GetMapping("/unemployed/new")
     public String showNewForm(Model model) {
+        List<Specialty> listSpecialty = specialtyService.listAll();
+        model.addAttribute("listSpecialty", listSpecialty);
         model.addAttribute("unemployed", new Unemployed());
         model.addAttribute("pageTitle", "Додати новий запис");
         return "unemployed_form";
@@ -41,6 +46,8 @@ public class UnemployedController {
     @GetMapping("/unemployed/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         try {
+            List<Specialty> listSpecialty = specialtyService.listAll();
+            model.addAttribute("listSpecialty", listSpecialty);
             Unemployed unemployed = unemployedService.get(id);
             model.addAttribute("unemployed", unemployed);
             model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");

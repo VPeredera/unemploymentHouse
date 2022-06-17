@@ -17,9 +17,6 @@ public class Reeducation implements Serializable {
     @Column(name = "id_reeduc")
     private Integer idReeduc;
 
-//    @Column(name = "id_spec")
-//    private Integer idSpec;
-
     @Column(name = "educ_institution")
     private String educInstitution;
 
@@ -29,21 +26,42 @@ public class Reeducation implements Serializable {
     @Column(name = "end_date")
     private java.sql.Date endDate;
 
-    @ManyToMany(mappedBy = "reeducations", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Unemployed> unemployedReeducation = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "unemployed_at_retraining",
+            joinColumns = {
+                    @JoinColumn(name = "id_reeduc", referencedColumnName = "id_reeduc",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "id_unemployed", referencedColumnName = "id_unemployed",
+                            nullable = false, updatable = false)})
+    private Set<Unemployed> unemployedReeduc = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_spec", nullable = false)
     private Specialty specialtyReeducation;
 
-    /**many to many methods*/
-    public Set<Unemployed> getUnemployed(){
-        return unemployedReeducation;
+    public void addUnemployed(Unemployed unemployed){
+        this.unemployedReeduc.add(unemployed);
     }
 
-    public void setUnemployed(Set<Unemployed> unemployedReeducation){
-        this.unemployedReeducation = unemployedReeducation;
+    public void removeUnemployed(Unemployed unemployed){
+        this.unemployedReeduc.remove(unemployed);
+    }
+
+    public Set<Unemployed> getUnemployedReeduc() {
+        return unemployedReeduc;
+    }
+
+    public void setUnemployedReeduc(Set<Unemployed> unemployedReeduc) {
+        this.unemployedReeduc = unemployedReeduc;
+    }
+
+    public Specialty getSpecialtyReeducation() {
+        return specialtyReeducation;
+    }
+
+    public void setSpecialtyReeducation(Specialty specialtyReeducation) {
+        this.specialtyReeducation = specialtyReeducation;
     }
 
     public Integer getIdReeduc() {
@@ -53,14 +71,6 @@ public class Reeducation implements Serializable {
     public void setIdReeduc(Integer idReeduc) {
         this.idReeduc = idReeduc;
     }
-
-//    public Integer getIdSpec() {
-//        return this.idSpec;
-//    }
-//
-//    public void setIdSpec(Integer idSpec) {
-//        this.idSpec = idSpec;
-//    }
 
     public String getEducInstitution() {
         return this.educInstitution;

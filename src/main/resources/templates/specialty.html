@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Unemployed</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<style>
+    body {
+        background-color: #c2a064;
+    }
+</style>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Список спеціальностей</h2></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/specialty/new}">Додати запис</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Найменування</th>
+                <th>Галузь знань</th>
+                <th>Шифр галузі</th>
+                <th>Код спеціальності</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="specialty : ${listSpecialty}">
+                <tr>
+                    <td>[[${specialty.idSpec}]]</td>
+                    <td>[[${specialty.specialtyName}]]</td>
+                    <td>[[${specialty.fieldOfKnowledge}]]</td>
+                    <td>[[${specialty.codeField}]]</td>
+                    <td>[[${specialty.specialtyCode}]]</td>
+                    <td>
+                        <a class="h4 mr-3" th:href="@{'/specialty/edit/' + ${specialty.idSpec}}">Edit</a>
+                        <a class="h4" th:href="@{'/specialty/delete/' + ${specialty.idSpec}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <div class="m-2">
+        <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Назад</button>
+    </div>
+</div>
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/}]]";
+    }
+</script>
+</body>
+</html>

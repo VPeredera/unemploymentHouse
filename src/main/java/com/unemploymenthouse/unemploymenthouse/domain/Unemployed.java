@@ -1,8 +1,11 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -34,15 +37,9 @@ public class Unemployed implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "unemployed_at_retraining",
-            joinColumns = {
-                    @JoinColumn(name = "id_unemployed", referencedColumnName = "id_unemployed",
-                            nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "id_reeduc", referencedColumnName = "id_reeduc",
-                            nullable = false, updatable = false)})
-    private Set<Reeducation> reeducations = new HashSet<>();
+    @ManyToMany(mappedBy = "unemployedReeduc", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Reeducation> reeducation = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "unemployed_profession",
@@ -66,18 +63,28 @@ public class Unemployed implements Serializable {
             cascade = CascadeType.ALL)
     private Set<Offers> offersUnemployed;
 
-    /**many to many methods*/
-    public void addReeducation(Reeducation reeducation){
-        this.reeducations.add(reeducation);
-        reeducation.getUnemployed().add(this);
+    public Set<Reeducation> getReeducation() {
+        return reeducation;
     }
 
-    public void removeReeducation(long reeducationId){
-        Reeducation reeducation = this.reeducations.stream().filter(reeduc -> reeduc.getIdReeduc() == reeducationId).findFirst().orElse(null);
-        if(reeducation != null){
-            this.reeducations.remove(reeducation);
-            reeducation.getUnemployed().remove(this);
-        }
+    public void setReeducation(Set<Reeducation> reeducation) {
+        this.reeducation = reeducation;
+    }
+
+    public Set<Specialty> getSpecialties() {
+        return specialties;
+    }
+
+    public void setSpecialties(Set<Specialty> specialties) {
+        this.specialties = specialties;
+    }
+
+    public void addSpecialty(Specialty specialty){
+        this.specialties.add(specialty);
+    }
+
+    public void removeSpecialty(Specialty specialty){
+        this.specialties.remove(specialty);
     }
 
     public Integer getIdUnemployed() {
@@ -142,5 +149,23 @@ public class Unemployed implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Unemployed that = (Unemployed) o;
+        return idUnemployed.equals(that.idUnemployed);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idUnemployed);
+    }
+
+    @Override
+    public String toString() {
+        return this.fullName;
     }
 }
