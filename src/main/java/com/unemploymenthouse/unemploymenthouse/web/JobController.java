@@ -1,12 +1,10 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.*;
-import com.unemploymenthouse.unemploymenthouse.exception.BenefitsNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.exception.JobNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.EmployerService;
 import com.unemploymenthouse.unemploymenthouse.service.JobService;
 import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
-import com.unemploymenthouse.unemploymenthouse.service.UnemployedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

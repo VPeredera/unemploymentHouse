@@ -11,12 +11,6 @@ public class Offers implements Serializable {
     @Column(name = "id_offer")
     private Integer idOffer;
 
-//    @Column(name = "id_unemployed")
-//    private Integer idUnemployed;
-//
-//    @Column(name = "id_job")
-//    private Integer idJob;
-
     @Column(name = "date_offer")
     private java.sql.Date dateOffer;
 
@@ -39,21 +33,21 @@ public class Offers implements Serializable {
         this.idOffer = idOffer;
     }
 
-//    public Integer getIdUnemployed() {
-//        return this.idUnemployed;
-//    }
-//
-//    public void setIdUnemployed(Integer idUnemployed) {
-//        this.idUnemployed = idUnemployed;
-//    }
-//
-//    public Integer getIdJob() {
-//        return this.idJob;
-//    }
-//
-//    public void setIdJob(Integer idJob) {
-//        this.idJob = idJob;
-//    }
+    public Unemployed getUnemployedOffer() {
+        return unemployedOffer;
+    }
+
+    public void setUnemployedOffer(Unemployed unemployedOffer) {
+        this.unemployedOffer = unemployedOffer;
+    }
+
+    public Jobs getJobsOffer() {
+        return jobsOffer;
+    }
+
+    public void setJobsOffer(Jobs jobsOffer) {
+        this.jobsOffer = jobsOffer;
+    }
 
     public java.sql.Date getDateOffer() {
         return this.dateOffer;
