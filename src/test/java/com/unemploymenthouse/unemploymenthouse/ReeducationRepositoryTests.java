@@ -20,7 +20,7 @@ public class ReeducationRepositoryTests {
     @Autowired
     private TestEntityManager entityManager;
 
-    @Test
+    /*@Test
     public void testCreateUnemployed() {
         Unemployed unemployed1 = new Unemployed();
         Unemployed unemployed2 = new Unemployed();
@@ -36,5 +36,5 @@ public class ReeducationRepositoryTests {
         reeducation1.addUnemployed(unemployed1);
 
         reeducationRepository.save(reeducation1);
-    }
+    }*/
 }

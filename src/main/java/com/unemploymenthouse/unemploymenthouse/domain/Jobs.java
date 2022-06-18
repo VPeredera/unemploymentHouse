@@ -1,7 +1,5 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
-import org.joda.money.Money;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -14,12 +12,6 @@ public class Jobs implements Serializable {
     @Column(name = "id_job")
     private Integer idJob;
 
-//    @Column(name = "id_employer")
-//    private Integer idEmployer;
-//
-//    @Column(name = "id_spec")
-//    private Integer idSpec;
-
     @Column(name = "job_title")
     private String jobTitle;
 
@@ -30,7 +22,7 @@ public class Jobs implements Serializable {
     private String positionDescription;
 
     @Column(name = "salary")
-    private Money salary;
+    private double salary;
 
     @Column(name = "date_of_vacancy")
     private java.sql.Date dateOfVacancy;
@@ -47,6 +39,22 @@ public class Jobs implements Serializable {
             cascade = CascadeType.ALL)
     private Set<Offers> offersJob;
 
+    public Specialty getSpecialtyJobs() {
+        return specialtyJobs;
+    }
+
+    public void setSpecialtyJobs(Specialty specialtyJobs) {
+        this.specialtyJobs = specialtyJobs;
+    }
+
+    public Employer getEmployerJobs() {
+        return employerJobs;
+    }
+
+    public void setEmployerJobs(Employer employerJobs) {
+        this.employerJobs = employerJobs;
+    }
+
     public Integer getIdJob() {
         return this.idJob;
     }
@@ -54,22 +62,6 @@ public class Jobs implements Serializable {
     public void setIdJob(Integer idJob) {
         this.idJob = idJob;
     }
-
-//    public Integer getIdEmployer() {
-//        return this.idEmployer;
-//    }
-//
-//    public void setIdEmployer(Integer idEmployer) {
-//        this.idEmployer = idEmployer;
-//    }
-//
-//    public Integer getIdSpec() {
-//        return this.idSpec;
-//    }
-//
-//    public void setIdSpec(Integer idSpec) {
-//        this.idSpec = idSpec;
-//    }
 
     public String getJobTitle() {
         return this.jobTitle;
@@ -95,11 +87,11 @@ public class Jobs implements Serializable {
         this.positionDescription = positionDescription;
     }
 
-    public Money getSalary() {
+    public double getSalary() {
         return this.salary;
     }
 
-    public void setSalary(Money salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 

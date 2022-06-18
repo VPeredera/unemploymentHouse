@@ -1,7 +1,5 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
-import org.joda.money.Money;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
