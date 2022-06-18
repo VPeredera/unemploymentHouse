@@ -1,9 +1,7 @@
 package com.unemploymenthouse.unemploymenthouse.service;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Reeducation;
-import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import com.unemploymenthouse.unemploymenthouse.exception.ReeducationNotFoundException;
-import com.unemploymenthouse.unemploymenthouse.exception.UnemployedNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.repository.ReeducationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

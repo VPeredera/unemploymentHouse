@@ -7,6 +7,7 @@ import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -94,5 +95,26 @@ public class Reeducation implements Serializable {
 
     public void setEndDate(java.sql.Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reeducation that = (Reeducation) o;
+        return idReeduc.equals(that.idReeduc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idReeduc);
+    }
+
+    @Override
+    public String toString() {
+        return "Reeducation{" +
+                "idReeduc=" + idReeduc +
+                ", educInstitution='" + educInstitution + '\'' +
+                '}';
     }
 }

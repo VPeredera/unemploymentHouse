@@ -28,6 +28,7 @@
                 <th>Дата початку</th>
                 <th>Дата закінчення</th>
                 <th>Спеціальність перенавчання</th>
+                <th>Безробітні</th>
                 <th></th>
             </tr>
             </thead>
@@ -39,6 +40,7 @@
                     <td>[[${reeducation.startDate}]]</td>
                     <td>[[${reeducation.endDate}]]</td>
                     <td>[[${reeducation.specialtyReeducation.specialtyName}]]</td>
+                    <td>[[${reeducation.unemployedReeduc}]]</td>
                     <td>
                         <a class="h4 mr-3" th:href="@{'/reeducation/edit/' + ${reeducation.idReeduc}}">Edit</a>
                         <a class="h4" th:href="@{'/reeducation/delete/' + ${reeducation.idReeduc}}">Delete</a>

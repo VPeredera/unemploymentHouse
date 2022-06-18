@@ -2,9 +2,11 @@ package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Reeducation;
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
+import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import com.unemploymenthouse.unemploymenthouse.exception.ReeducationNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.ReeducationService;
 import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
+import com.unemploymenthouse.unemploymenthouse.service.UnemployedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ReeducationController {
     @Autowired private ReeducationService reeducationService;
     @Autowired private SpecialtyService specialtyService;
+    @Autowired private UnemployedService unemployedService;
 
     @GetMapping("/reeducation")
     public String showReeducationList(Model model) {
@@ -29,6 +32,8 @@ public class ReeducationController {
 
     @GetMapping("/reeducation/new")
     public String showNewForm(Model model) {
+        List<Unemployed> listUnemployed = unemployedService.listAll();
+        model.addAttribute("listUnemployed", listUnemployed);
         List<Specialty> listSpecialties = specialtyService.listAll();
         model.addAttribute("listSpecialties", listSpecialties);
         model.addAttribute("reeducation", new Reeducation());
@@ -46,6 +51,8 @@ public class ReeducationController {
     @GetMapping("/reeducation/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         try {
+            List<Unemployed> listUnemployed = unemployedService.listAll();
+            model.addAttribute("listUnemployed", listUnemployed);
             List<Specialty> listSpecialties = specialtyService.listAll();
             model.addAttribute("listSpecialties", listSpecialties);
             Reeducation reeducation = reeducationService.get(id);
