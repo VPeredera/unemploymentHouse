@@ -1,5 +1,6 @@
 package com.unemploymenthouse.unemploymenthouse.service;
 
+import com.unemploymenthouse.unemploymenthouse.domain.Jobs;
 import com.unemploymenthouse.unemploymenthouse.domain.Resume;
 import com.unemploymenthouse.unemploymenthouse.exception.ResumeNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.repository.ResumeRepository;
@@ -35,5 +36,9 @@ public class ResumeService {
             throw new ResumeNotFoundException("Немає резюме з ID: " + id);
         }
         resumeRepository.deleteById(id);
+    }
+
+    public List<Resume> getResumeByName(String fullName){
+        return resumeRepository.findResumeByName(fullName);
     }
 }

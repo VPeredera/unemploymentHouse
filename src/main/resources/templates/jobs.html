@@ -16,12 +16,12 @@
     <div class="m-2">
         <a class="h3" th:href="@{/jobs/new}">Додати запис</a>
     </div>
-    <form th:action="@{/jobs/search}" method="get">
+    <form th:action="@{/jobs/searchByCompany}" method="get">
         <input type="text" name="companyName" th:value="${companyName}"  placeholder="Пошук за підприємствами" size="22" >
         <button type="submit" class="btn btn-info" >Знайти</button>
         <button type="button" class="btn btn-secondary" onclick="cancelForm1()">Скинути</button>
     </form>
-    <div th:if="${message}" class="alert alert-success text-center">
+    <div th:if="${message}" class="alert alert-success text-center mt-2">
         [[${message}]]
     </div>
     <div>

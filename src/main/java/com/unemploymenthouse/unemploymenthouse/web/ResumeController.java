@@ -1,5 +1,6 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
+import com.unemploymenthouse.unemploymenthouse.domain.Jobs;
 import com.unemploymenthouse.unemploymenthouse.domain.Resume;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import com.unemploymenthouse.unemploymenthouse.exception.ResumeNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -69,5 +71,17 @@ public class ResumeController {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/resume";
+    }
+
+    @RequestMapping("/resume/searchByName")
+    public String findByName(Resume resume, Model model, String fullName){
+        if(fullName != null){
+            List<Resume> listResume = resumeService.getResumeByName(fullName);
+            model.addAttribute("listResume", listResume);
+        } else {
+            List<Resume> listResume = resumeService.listAll();
+            model.addAttribute("listResume", listResume);
+        }
+        return "resume";
     }
 }

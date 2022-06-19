@@ -76,7 +76,7 @@ public class JobController {
         return "redirect:/jobs";
     }
 
-    @RequestMapping("/jobs/search")
+    @RequestMapping("/jobs/searchByCompany")
     public String findByCompany(Jobs jobs, Model model, String companyName){
         if(companyName != null){
             List<Jobs> listJobs = jobService.getJobsByCompany(companyName);
