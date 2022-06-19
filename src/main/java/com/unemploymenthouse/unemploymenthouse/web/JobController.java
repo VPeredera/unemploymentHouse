@@ -26,6 +26,8 @@ public class JobController {
     public String showJobsList(Model model) {
         List<Jobs> listJobs = jobService.listAll();
         model.addAttribute("listJobs", listJobs);
+        List<Jobs> listMaxSalary = jobService.getMaxSalaryJob();
+        model.addAttribute("listMaxSalary", listMaxSalary);
         return "jobs";
     }
 

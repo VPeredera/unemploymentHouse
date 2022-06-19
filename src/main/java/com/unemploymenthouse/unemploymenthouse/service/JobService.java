@@ -45,4 +45,8 @@ public class JobService {
     public List<Jobs> getJobsBySalary(double salary1, double salary2){
         return jobRepository.findJobsBySalary(salary1, salary2);
     }
+
+    public List<Jobs> getMaxSalaryJob(){
+        return jobRepository.findMaxSalaryJob();
+    }
 }

@@ -19,4 +19,8 @@ public interface JobRepository extends CrudRepository<Jobs, Integer> {
     @Transactional
     @Query(value = "SELECT * FROM jobs WHERE jobs.salary BETWEEN ?1 AND ?2", nativeQuery = true)
     List<Jobs> findJobsBySalary(@Param("salary1") double salary1, @Param("salary2") double salary2);
+
+    @Transactional
+    @Query(value = "SELECT * FROM jobs AS j WHERE j.salary = (SELECT MAX(k.salary) FROM jobs AS k WHERE j.id_spec = k.id_spec)", nativeQuery = true)
+    List<Jobs> findMaxSalaryJob();
 }
