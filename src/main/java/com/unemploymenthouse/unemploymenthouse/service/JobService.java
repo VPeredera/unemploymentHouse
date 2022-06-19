@@ -42,4 +42,7 @@ public class JobService {
     public List<Jobs> getJobsByCompany(String companyName){
         return jobRepository.findJobsByCompany(companyName);
     }
+    public List<Jobs> getJobsBySalary(double salary1, double salary2){
+        return jobRepository.findJobsBySalary(salary1, salary2);
+    }
 }

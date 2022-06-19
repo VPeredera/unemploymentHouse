@@ -87,4 +87,16 @@ public class JobController {
         }
         return "jobs";
     }
+
+    @RequestMapping("/jobs/searchBySalary")
+    public String findBySalary(Jobs jobs, Model model, double salary1, double salary2){
+        if(salary1 != 0 && salary2 != 0){
+            List<Jobs> listJobs = jobService.getJobsBySalary(salary1, salary2);
+            model.addAttribute("listJobs", listJobs);
+        } else {
+            List<Jobs> listJobs = jobService.listAll();
+            model.addAttribute("listJobs", listJobs);
+        }
+        return "jobs";
+    }
 }

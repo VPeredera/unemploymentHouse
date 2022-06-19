@@ -13,6 +13,10 @@ public interface JobRepository extends CrudRepository<Jobs, Integer> {
 
     @Transactional
     @Query(value = "SELECT * FROM jobs WHERE jobs.id_employer IN " +
-            "(SELECT employer.id_employer FROM employer WHERE employer.company_name = ?1 )", nativeQuery = true)
+            "(SELECT employer.id_employer FROM employer WHERE employer.company_name = ?1) ORDER BY jobs.salary DESC", nativeQuery = true)
     List<Jobs> findJobsByCompany(@Param("companyName") String companyName);
+
+    @Transactional
+    @Query(value = "SELECT * FROM jobs WHERE jobs.salary BETWEEN ?1 AND ?2", nativeQuery = true)
+    List<Jobs> findJobsBySalary(@Param("salary1") double salary1, @Param("salary2") double salary2);
 }
