@@ -36,4 +36,8 @@ public class BenefitsService {
         }
         benefitsRepository.deleteById(id);
     }
+
+    public double getSum(){
+        return benefitsRepository.findSum();
+    }
 }
