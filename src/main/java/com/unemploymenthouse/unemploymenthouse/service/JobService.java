@@ -38,4 +38,8 @@ public class JobService {
         }
         jobRepository.deleteById(id);
     }
+
+    public List<Jobs> getJobsByCompany(String companyName){
+        return jobRepository.findJobsByCompany(companyName);
+    }
 }

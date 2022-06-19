@@ -16,11 +16,16 @@
     <div class="m-2">
         <a class="h3" th:href="@{/jobs/new}">Додати запис</a>
     </div>
+    <form th:action="@{/jobs/search}" method="get">
+        <input type="text" name="companyName" th:value="${companyName}"  placeholder="Пошук за підприємствами" size="22" >
+        <button type="submit" class="btn btn-info" >Знайти</button>
+        <button type="button" class="btn btn-secondary" onclick="cancelForm1()">Скинути</button>
+    </form>
     <div th:if="${message}" class="alert alert-success text-center">
         [[${message}]]
     </div>
     <div>
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-2">
             <thead class="thead-dark">
             <tr>
                 <th>ID</th>
@@ -61,6 +66,11 @@
 <script type="text/javascript">
     function cancelForm() {
         window.location = "[[@{/}]]";
+    }
+</script>
+<script type="text/javascript">
+    function cancelForm1() {
+        window.location = "[[@{/jobs}]]";
     }
 </script>
 </body>

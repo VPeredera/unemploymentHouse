@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -73,5 +74,17 @@ public class JobController {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/jobs";
+    }
+
+    @RequestMapping("/jobs/search")
+    public String findByCompany(Jobs jobs, Model model, String companyName){
+        if(companyName != null){
+            List<Jobs> listJobs = jobService.getJobsByCompany(companyName);
+            model.addAttribute("listJobs", listJobs);
+        } else {
+            List<Jobs> listJobs = jobService.listAll();
+            model.addAttribute("listJobs", listJobs);
+        }
+        return "jobs";
     }
 }
