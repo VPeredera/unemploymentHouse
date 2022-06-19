@@ -49,4 +49,8 @@ public class UnemployedService {
     public List<Unemployed> getUnemployedByLetter(String fullName){
         return unemployedRepository.findUnemployedByLetter(fullName);
     }
+
+    public List<Unemployed> getUnemployedByRegistration(java.sql.Date date1, java.sql.Date date2){
+        return unemployedRepository.findUnemployedByRegistration(date1, date2);
+    }
 }

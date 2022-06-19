@@ -83,4 +83,16 @@ public class UnemployedController {
         }
         return "unemployed";
     }
+
+    @RequestMapping("/unemployed/searchByRegistration")
+    public String findByDate(Unemployed unemployed, Model model, java.sql.Date date1, java.sql.Date date2){
+        if(date1 != null && date2 != null){
+            List<Unemployed> listUnemployed = unemployedService.getUnemployedByRegistration(date1, date2);
+            model.addAttribute("listUnemployed", listUnemployed);
+        } else {
+            List<Unemployed> listUnemployed = unemployedService.listAll();
+            model.addAttribute("listUnemployed", listUnemployed);
+        }
+        return "unemployed";
+    }
 }

@@ -21,6 +21,14 @@
         <button type="submit" class="btn btn-info" >Знайти</button>
         <button type="button" class="btn btn-secondary" onclick="cancelForm1()">Скинути</button>
     </form>
+    <form th:action="@{/unemployed/searchByRegistration}" method="get" class="mt-2" >
+        Вибір безробітних, зареєстрованих від
+        <input type="date" name="date1" th:value="${date1}" >
+        до
+        <input type="date" name="date2" th:value="${date2}" >
+        <button type="submit" class="btn btn-info" >Знайти</button>
+        <button type="button" class="btn btn-secondary" onclick="cancelForm1()">Скинути</button>
+    </form>
     <div th:if="${message}" class="alert alert-success text-center mt-2">
         [[${message}]]
     </div>

@@ -20,7 +20,7 @@
                 <label class="col-sm-4 col-form-label">Дата запису:</label>
                 <div class="col-sm-8">
                     <input type="date" th:field="*{dateRecord}" class="form-control" id="datePicker">
-                    <script>
+                    <script th:if="${pageTitle == 'Додати новий запис'}">
                         document.getElementById('datePicker').valueAsDate = new Date();
                     </script>
                 </div>
