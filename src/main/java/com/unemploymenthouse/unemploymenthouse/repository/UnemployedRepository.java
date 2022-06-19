@@ -18,4 +18,9 @@ public interface UnemployedRepository extends CrudRepository<Unemployed, Integer
     @Transactional
     @Query(value = "SELECT * FROM unemployed WHERE unemployed.registration_date BETWEEN ?1 AND ?2", nativeQuery = true)
     List<Unemployed> findUnemployedByRegistration(@Param("date1") java.sql.Date date1, @Param("date2") java.sql.Date date2);
+
+    @Transactional
+    @Query(value = "SELECT * FROM unemployed WHERE unemployed.birthday <= ALL " +
+            "(SELECT unemployed.birthday FROM unemployed)", nativeQuery = true)
+    List<Unemployed> findOldest();
 }

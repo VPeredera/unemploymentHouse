@@ -26,6 +26,8 @@ public class UnemployedController {
     public String showUnemployedList(Model model) {
         List<Unemployed> listUnemployed = unemployedService.listAll();
         model.addAttribute("listUnemployed", listUnemployed);
+        List<Unemployed> listOldest = unemployedService.getOldest();
+        model.addAttribute("listOldest", listOldest);
         return "unemployed";
     }
 

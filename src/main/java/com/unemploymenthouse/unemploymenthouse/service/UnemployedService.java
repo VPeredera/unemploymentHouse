@@ -53,4 +53,8 @@ public class UnemployedService {
     public List<Unemployed> getUnemployedByRegistration(java.sql.Date date1, java.sql.Date date2){
         return unemployedRepository.findUnemployedByRegistration(date1, date2);
     }
+
+    public List<Unemployed> getOldest(){
+        return unemployedRepository.findOldest();
+    }
 }
