@@ -2,7 +2,6 @@ package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Employer;
 import com.unemploymenthouse.unemploymenthouse.exception.EmployerNotFoundException;
-import com.unemploymenthouse.unemploymenthouse.exception.UnemployedNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -4,6 +4,7 @@ import com.unemploymenthouse.unemploymenthouse.domain.Reeducation;
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import com.unemploymenthouse.unemploymenthouse.exception.ReeducationNotFoundException;
+import com.unemploymenthouse.unemploymenthouse.query.ReeducationAmount;
 import com.unemploymenthouse.unemploymenthouse.service.ReeducationService;
 import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
 import com.unemploymenthouse.unemploymenthouse.service.UnemployedService;
@@ -27,6 +28,8 @@ public class ReeducationController {
     public String showReeducationList(Model model) {
         List<Reeducation> listReeducation = reeducationService.listAll();
         model.addAttribute("listReeducation", listReeducation);
+        List<ReeducationAmount> listReeducationAmount = reeducationService.getAmountReeducation();
+        model.addAttribute("listReeducationAmount", listReeducationAmount);
         return "reeducation";
     }
 

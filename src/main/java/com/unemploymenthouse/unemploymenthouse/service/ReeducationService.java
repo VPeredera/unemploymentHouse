@@ -2,6 +2,7 @@ package com.unemploymenthouse.unemploymenthouse.service;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Reeducation;
 import com.unemploymenthouse.unemploymenthouse.exception.ReeducationNotFoundException;
+import com.unemploymenthouse.unemploymenthouse.query.ReeducationAmount;
 import com.unemploymenthouse.unemploymenthouse.repository.ReeducationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,9 @@ public class ReeducationService {
             throw new ReeducationNotFoundException("Немає перенавчання з ID: " + id);
         }
         reeducationRepository.deleteById(id);
+    }
+
+    public List<ReeducationAmount> getAmountReeducation(){
+        return reeducationRepository.findAmountReeducation();
     }
 }
