@@ -38,4 +38,8 @@ public class OffersService{
         }
         offersRepository.deleteById(id);
     }
+
+    public int getCount(){
+        return offersRepository.findCount();
+    }
 }

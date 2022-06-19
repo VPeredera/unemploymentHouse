@@ -25,6 +25,8 @@ public class OffersController {
     public String showOffersList(Model model) {
         List<Offers> listOffers = offersService.listAll();
         model.addAttribute("listOffers", listOffers);
+        int count = offersService.getCount();
+        model.addAttribute("count", count);
         return "offers";
     }
 
