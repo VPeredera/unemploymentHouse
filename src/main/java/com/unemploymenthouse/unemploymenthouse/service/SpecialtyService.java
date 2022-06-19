@@ -37,4 +37,8 @@ public class SpecialtyService {
         }
         specialtyRepository.deleteById(id);
     }
+
+    public List<Specialty> getSpecialtyByPart(String wordPart){
+        return specialtyRepository.findSpecialtyByPart(wordPart);
+    }
 }

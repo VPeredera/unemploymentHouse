@@ -16,11 +16,16 @@
     <div class="m-2">
         <a class="h3" th:href="@{/specialty/new}">Додати запис</a>
     </div>
-    <div th:if="${message}" class="alert alert-success text-center">
+    <form th:action="@{/specialty/searchByWordPart}" method="get">
+        <input type="text" name="wordPart" th:value="${wordPart}"  placeholder="Пошук за частиною слова" size="25" >
+        <button type="submit" class="btn btn-info" >Знайти</button>
+        <button type="button" class="btn btn-secondary" onclick="cancelForm1()">Скинути</button>
+    </form>
+    <div th:if="${message}" class="alert alert-success text-center mt-2">
         [[${message}]]
     </div>
     <div>
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-2">
             <thead class="thead-dark">
             <tr>
                 <th>ID</th>
@@ -55,6 +60,11 @@
 <script type="text/javascript">
     function cancelForm() {
         window.location = "[[@{/}]]";
+    }
+</script>
+<script type="text/javascript">
+    function cancelForm1() {
+        window.location = "[[@{/specialty}]]";
     }
 </script>
 </body>

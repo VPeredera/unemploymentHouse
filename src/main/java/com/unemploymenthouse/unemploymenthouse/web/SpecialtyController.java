@@ -1,6 +1,7 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
+import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import com.unemploymenthouse.unemploymenthouse.exception.SpecialtyNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -62,5 +64,17 @@ public class SpecialtyController {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/specialty";
+    }
+
+    @RequestMapping("/specialty/searchByWordPart")
+    public String findByLetter(Specialty specialty, Model model, String wordPart){
+        if(wordPart != null){
+            List<Specialty> listSpecialty = specialtyService.getSpecialtyByPart(wordPart);
+            model.addAttribute("listSpecialty", listSpecialty);
+        } else {
+            List<Specialty> listSpecialty = specialtyService.listAll();
+            model.addAttribute("listSpecialty", listSpecialty);
+        }
+        return "specialty";
     }
 }
