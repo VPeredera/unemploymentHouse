@@ -1,5 +1,6 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
+import com.unemploymenthouse.unemploymenthouse.domain.Jobs;
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import com.unemploymenthouse.unemploymenthouse.exception.UnemployedNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.unemploymenthouse.unemploymenthouse.service.UnemployedService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -68,5 +70,17 @@ public class UnemployedController {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/unemployed";
+    }
+
+    @RequestMapping("/unemployed/searchByLetter")
+    public String findByLetter(Unemployed unemployed, Model model, String fullName){
+        if(fullName != null){
+            List<Unemployed> listUnemployed = unemployedService.getUnemployedByLetter(fullName);
+            model.addAttribute("listUnemployed", listUnemployed);
+        } else {
+            List<Unemployed> listUnemployed = unemployedService.listAll();
+            model.addAttribute("listUnemployed", listUnemployed);
+        }
+        return "unemployed";
     }
 }

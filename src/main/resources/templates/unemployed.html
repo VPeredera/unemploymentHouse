@@ -16,11 +16,16 @@
     <div class="m-2">
         <a class="h3" th:href="@{/unemployed/new}">Додати запис</a>
     </div>
-    <div th:if="${message}" class="alert alert-success text-center">
+    <form th:action="@{/unemployed/searchByLetter}" method="get">
+        <input type="text" name="fullName" th:value="${fullName}"  placeholder="Пошук за буквою" size="22" >
+        <button type="submit" class="btn btn-info" >Знайти</button>
+        <button type="button" class="btn btn-secondary" onclick="cancelForm1()">Скинути</button>
+    </form>
+    <div th:if="${message}" class="alert alert-success text-center mt-2">
         [[${message}]]
     </div>
     <div>
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-2">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
@@ -63,6 +68,11 @@
 <script type="text/javascript">
     function cancelForm() {
         window.location = "[[@{/}]]";
+    }
+</script>
+<script type="text/javascript">
+    function cancelForm1() {
+        window.location = "[[@{/unemployed}]]";
     }
 </script>
 </body>

@@ -45,4 +45,8 @@ public class UnemployedService {
         }
         unemployedRepository.deleteById(id);
     }
+
+    public List<Unemployed> getUnemployedByLetter(String fullName){
+        return unemployedRepository.findUnemployedByLetter(fullName);
+    }
 }
