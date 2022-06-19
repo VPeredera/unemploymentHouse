@@ -36,4 +36,8 @@ public class EmployerService {
         }
         employerRepository.deleteById(id);
     }
+
+    public List<Employer> getNotBigger(Integer amount){
+        return employerRepository.findNotBigger(amount);
+    }
 }

@@ -1,6 +1,7 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Employer;
+import com.unemploymenthouse.unemploymenthouse.domain.Resume;
 import com.unemploymenthouse.unemploymenthouse.exception.EmployerNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -62,5 +64,17 @@ public class EmployerController {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/employer";
+    }
+
+    @RequestMapping("/employer/notBigger")
+    public String findNotBigger(Resume resume, Model model, Integer amount){
+        if(amount != 0){
+            List<Employer> listEmployer = employerService.getNotBigger(amount);
+            model.addAttribute("listEmployer", listEmployer);
+        } else {
+            List<Employer> listEmployer = employerService.listAll();
+            model.addAttribute("listEmployer", listEmployer);
+        }
+        return "employer";
     }
 }
