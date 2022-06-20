@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Manage Unemployed</title>
@@ -14,7 +14,7 @@
 <div class="container-fluid text-center">
     <div><h2>Список спеціальностей</h2></div>
     <div class="m-2">
-        <a class="h3" th:href="@{/specialty/new}">Додати запис</a>
+        <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" class="h3" th:href="@{/specialty/new}">Додати запис</a>
     </div>
     <form th:action="@{/specialty/searchByWordPart}" method="get">
         <input type="text" name="wordPart" th:value="${wordPart}"  placeholder="Пошук за частиною слова" size="25" >
@@ -33,7 +33,7 @@
                 <th>Галузь знань</th>
                 <th>Шифр галузі</th>
                 <th>Код спеціальності</th>
-                <th></th>
+                <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"></th>
             </tr>
             </thead>
             <tbody>
@@ -44,9 +44,9 @@
                     <td>[[${specialty.fieldOfKnowledge}]]</td>
                     <td>[[${specialty.codeField}]]</td>
                     <td>[[${specialty.specialtyCode}]]</td>
-                    <td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
                         <a class="h4 mr-3" th:href="@{'/specialty/edit/' + ${specialty.idSpec}}">Edit</a>
-                        <a class="h4" th:href="@{'/specialty/delete/' + ${specialty.idSpec}}">Delete</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="h4" th:href="@{'/specialty/delete/' + ${specialty.idSpec}}">Delete</a>
                     </td>
                 </tr>
             </th:block>

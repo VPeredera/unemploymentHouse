@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Resume</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 </head>
 <style>
     body {
@@ -14,7 +14,7 @@
 <div class="container-fluid text-center">
     <div><h2>Список резюме</h2></div>
     <div class="m-2">
-        <a class="h3" th:href="@{/resume/new}">Додати запис</a>
+        <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" class="h3" th:href="@{/resume/new}">Додати запис</a>
     </div>
     <form th:action="@{/resume/searchByName}" method="get">
         <input type="text" name="fullName" th:value="${fullName}"  placeholder="Пошук за ім'ям" size="22" >
@@ -33,7 +33,7 @@
                 <th>Відомості</th>
                 <th>Додаткова інформація</th>
                 <th>Безробітний</th>
-                <th></th>
+                <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"></th>
             </tr>
             </thead>
             <tbody>
@@ -44,9 +44,9 @@
                     <td>[[${resume.statements}]]</td>
                     <td>[[${resume.moreDetails}]]</td>
                     <td>[[${resume.unemployedResume.fullName}]]</td>
-                    <td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
                         <a class="h4 mr-3" th:href="@{'/resume/edit/' + ${resume.idResume}}">Edit</a>
-                        <a class="h4" th:href="@{'/resume/delete/' + ${resume.idResume}}">Delete</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="h4" th:href="@{'/resume/delete/' + ${resume.idResume}}">Delete</a>
                     </td>
                 </tr>
             </th:block>

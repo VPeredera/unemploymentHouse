@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Manage Unemployed</title>
@@ -63,7 +63,7 @@
 <div class="container-fluid text-center">
     <div><h2>Список безробітних</h2></div>
     <div class="m-2">
-        <a class="h3" th:href="@{/unemployed/new}">Додати запис</a>
+        <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" class="h3" th:href="@{/unemployed/new}">Додати запис</a>
     </div>
     <form th:action="@{/unemployed/searchByLetter}" method="get">
         <input type="text" name="fullName" th:value="${fullName}"  placeholder="Пошук за буквою" size="22" >
@@ -131,7 +131,7 @@
                     <th>Дана постановки на облік</th>
                     <th>Статус</th>
                     <th>Спеціальність</th>
-                    <th></th>
+                    <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"></th>
                 </tr>
             </thead>
             <tbody>
@@ -146,9 +146,9 @@
                     <td>[[${unemployed.registrationDate}]]</td>
                     <td>[[${unemployed.status}]]</td>
                     <td>[[${unemployed.specialties}]]</td>
-                    <td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
                         <a class="h4 mr-3" th:href="@{'/unemployed/edit/' + ${unemployed.idUnemployed}}">Edit</a>
-                        <a class="h4" th:href="@{'/unemployed/delete/' + ${unemployed.idUnemployed}}">Delete</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="h4" th:href="@{'/unemployed/delete/' + ${unemployed.idUnemployed}}">Delete</a>
                     </td>
                 </tr>
             </th:block>

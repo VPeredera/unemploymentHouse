@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Manage Employers</title>
@@ -14,7 +14,7 @@
 <div class="container-fluid text-center">
     <div><h2>Список роботодавців</h2></div>
     <div class="m-2">
-        <a class="h3" th:href="@{/employer/new}">Додати запис</a>
+        <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" class="h3" th:href="@{/employer/new}">Додати запис</a>
     </div>
     <form th:action="@{/employer/notBigger}" method="get">
         <input type="number" name="amount" th:value="${amount}"  placeholder="Менше ніж" size="15" >
@@ -35,7 +35,7 @@
                     <th>Місце розташування</th>
                     <th>Контактні дані роботодавця</th>
                     <th>Кількість вакансій</th>
-                    <th></th>
+                    <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"></th>
                 </tr>
             </thead>
             <tbody>
@@ -48,9 +48,9 @@
                     <td>[[${employer.companyLocation}]]</td>
                     <td>[[${employer.employerContact}]]</td>
                     <td>[[${employer.jobVacancies}]]</td>
-                    <td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
                         <a class="h4 mr-3" th:href="@{'/employer/edit/' + ${employer.idEmployer}}">Edit</a>
-                        <a class="h4" th:href="@{'/employer/delete/' + ${employer.idEmployer}}">Delete</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="h4" th:href="@{'/employer/delete/' + ${employer.idEmployer}}">Delete</a>
                     </td>
                 </tr>
             </th:block>
