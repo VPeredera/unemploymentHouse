@@ -1,6 +1,7 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Reeducation;
+import com.unemploymenthouse.unemploymenthouse.domain.ReeducationPDFExporter;
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import com.unemploymenthouse.unemploymenthouse.exception.ReeducationNotFoundException;
@@ -16,6 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -78,5 +85,22 @@ public class ReeducationController {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/reeducation";
+    }
+
+    @GetMapping("/reeducation/export")
+    public void exportToPDF(HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormat.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=reeducation_" + currentDateTime + ".pdf";
+
+        response.setHeader(headerKey, headerValue);
+
+        List<ReeducationAmount> listReeducationAmount = reeducationService.getAmountReeducation();
+
+        ReeducationPDFExporter exporter = new ReeducationPDFExporter(listReeducationAmount);
+        exporter.export(response);
     }
 }
