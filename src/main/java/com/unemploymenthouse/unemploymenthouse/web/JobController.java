@@ -2,6 +2,7 @@ package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.*;
 import com.unemploymenthouse.unemploymenthouse.exception.JobNotFoundException;
+import com.unemploymenthouse.unemploymenthouse.query.ReeducationAmount;
 import com.unemploymenthouse.unemploymenthouse.service.EmployerService;
 import com.unemploymenthouse.unemploymenthouse.service.JobService;
 import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
@@ -14,6 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -100,5 +106,22 @@ public class JobController {
             model.addAttribute("listJobs", listJobs);
         }
         return "jobs";
+    }
+
+    @GetMapping("/jobs/export")
+    public void exportToPDF2(HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormat.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=reeducation_" + currentDateTime + ".pdf";
+
+        response.setHeader(headerKey, headerValue);
+
+        List<Jobs> listMaxSalary = jobService.getMaxSalaryJob();
+
+        JobsPDFExporter exporter = new JobsPDFExporter(listMaxSalary);
+        exporter.export(response);
     }
 }
