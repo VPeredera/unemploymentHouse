@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import javax.transaction.Transactional;
 
 public interface OffersRepository extends CrudRepository<Offers, Integer> {
-    public Long countByIdOffer(Integer id);
+    Long countByIdOffer(Integer id);
 
     @Transactional
     @Query(value = "SELECT COUNT(offers.id_offer) FROM offers " +

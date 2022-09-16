@@ -1,9 +1,7 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
-import com.unemploymenthouse.unemploymenthouse.domain.Jobs;
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
-import com.unemploymenthouse.unemploymenthouse.exception.UnemployedNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
@@ -57,7 +56,7 @@ public class UnemployedController {
             model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
             ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
             return "unemployed_form";
-        } catch (UnemployedNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/unemployed";
         }
@@ -65,12 +64,8 @@ public class UnemployedController {
 
     @GetMapping("/unemployed/delete/{id}")
     public String deleteUnemployed(@PathVariable("id") Integer id, RedirectAttributes ra){
-        try {
-            unemployedService.delete(id);
-            ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
-        } catch (UnemployedNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-        }
+        unemployedService.delete(id);
+        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
         return "redirect:/unemployed";
     }
 

@@ -1,11 +1,11 @@
-package com.unemploymenthouse.unemploymenthouse.domain;
+package com.unemploymenthouse.unemploymenthouse.exporter;
 
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.unemploymenthouse.unemploymenthouse.query.ReeducationAmount;
+import com.unemploymenthouse.unemploymenthouse.domain.Jobs;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class JobsPDFExporter {
-    private List<Jobs> listMaxSalary;
+    private final List<Jobs> listMaxSalary;
 
     public JobsPDFExporter(List<Jobs> listMaxSalary) {
         this.listMaxSalary = listMaxSalary;
@@ -24,7 +24,7 @@ public class JobsPDFExporter {
         cell.setBackgroundColor(Color.ORANGE);
         cell.setPadding(5);
 
-        com.lowagie.text.Font font = FontFactory.getFont(FontFactory.HELVETICA);
+        Font font = FontFactory.getFont(FontFactory.HELVETICA);
         font.setColor(Color.BLACK);
 
         cell.setPhrase(new Phrase("Job", font));

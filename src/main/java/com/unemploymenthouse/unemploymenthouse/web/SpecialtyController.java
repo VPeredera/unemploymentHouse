@@ -1,8 +1,6 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
-import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
-import com.unemploymenthouse.unemploymenthouse.exception.SpecialtyNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
@@ -43,26 +42,17 @@ public class SpecialtyController {
 
     @GetMapping("/specialty/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
-        try {
-            Specialty specialty = specialtyService.get(id);
-            model.addAttribute("specialty", specialty);
-            model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-            ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
-            return "specialty_form";
-        } catch (SpecialtyNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/specialty";
-        }
+        Specialty specialty = specialtyService.get(id);
+        model.addAttribute("specialty", specialty);
+        model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
+        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        return "specialty_form";
     }
 
     @GetMapping("/specialty/delete/{id}")
     public String deleteSpecialty(@PathVariable("id") Integer id, RedirectAttributes ra){
-        try {
-            specialtyService.delete(id);
-            ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
-        } catch (SpecialtyNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-        }
+        specialtyService.delete(id);
+        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
         return "redirect:/specialty";
     }
 

@@ -14,13 +14,13 @@ import org.springframework.test.annotation.Rollback;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
 public class ReeducationRepositoryTests {
-    @Autowired
+    /*@Autowired
     private ReeducationRepository reeducationRepository;
 
     @Autowired
     private TestEntityManager entityManager;
 
-    /*@Test
+    @Test
     public void testCreateUnemployed() {
         Unemployed unemployed1 = new Unemployed();
         Unemployed unemployed2 = new Unemployed();

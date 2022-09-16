@@ -1,4 +1,4 @@
-package com.unemploymenthouse.unemploymenthouse.domain;
+package com.unemploymenthouse.unemploymenthouse.login;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class MyUserDetails implements UserDetails {
-    private User user;
+    private final User user;
 
     public MyUserDetails(User user) {
         this.user = user;

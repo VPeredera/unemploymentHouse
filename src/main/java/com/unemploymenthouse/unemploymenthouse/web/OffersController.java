@@ -1,7 +1,6 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.*;
-import com.unemploymenthouse.unemploymenthouse.exception.OfferNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.JobService;
 import com.unemploymenthouse.unemploymenthouse.service.OffersService;
 import com.unemploymenthouse.unemploymenthouse.service.UnemployedService;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
@@ -50,30 +50,21 @@ public class OffersController {
 
     @GetMapping("/offers/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
-        try {
-            List<Unemployed> listUnemployed = unemployedService.listAll();
-            model.addAttribute("listUnemployed", listUnemployed);
-            List<Jobs> listJobs = jobService.listAll();
-            model.addAttribute("listJobs", listJobs);
-            Offers offers = offersService.get(id);
-            model.addAttribute("offers", offers);
-            model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-            ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
-            return "offers_form";
-        } catch (OfferNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/offers";
-        }
+        List<Unemployed> listUnemployed = unemployedService.listAll();
+        model.addAttribute("listUnemployed", listUnemployed);
+        List<Jobs> listJobs = jobService.listAll();
+        model.addAttribute("listJobs", listJobs);
+        Offers offers = offersService.get(id);
+        model.addAttribute("offers", offers);
+        model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
+        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        return "offers_form";
     }
 
     @GetMapping("/offers/delete/{id}")
     public String deleteOffers(@PathVariable("id") Integer id, RedirectAttributes ra){
-        try {
-            offersService.delete(id);
-            ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
-        } catch (OfferNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-        }
+        offersService.delete(id);
+        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
         return "redirect:/offers";
     }
 }

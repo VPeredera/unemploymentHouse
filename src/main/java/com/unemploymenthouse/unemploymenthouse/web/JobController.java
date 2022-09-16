@@ -1,8 +1,7 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.*;
-import com.unemploymenthouse.unemploymenthouse.exception.JobNotFoundException;
-import com.unemploymenthouse.unemploymenthouse.query.ReeducationAmount;
+import com.unemploymenthouse.unemploymenthouse.exporter.JobsPDFExporter;
 import com.unemploymenthouse.unemploymenthouse.service.EmployerService;
 import com.unemploymenthouse.unemploymenthouse.service.JobService;
 import com.unemploymenthouse.unemploymenthouse.service.SpecialtyService;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -57,30 +57,21 @@ public class JobController {
 
     @GetMapping("/jobs/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
-        try {
-            List<Specialty> listSpecialties = specialtyService.listAll();
-            model.addAttribute("listSpecialties", listSpecialties);
-            List<Employer> listEmployers = employerService.listAll();
-            model.addAttribute("listEmployers", listEmployers);
-            Jobs jobs = jobService.get(id);
-            model.addAttribute("jobs", jobs);
-            model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-            ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
-            return "jobs_form";
-        } catch (JobNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/jobs";
-        }
+        List<Specialty> listSpecialties = specialtyService.listAll();
+        model.addAttribute("listSpecialties", listSpecialties);
+        List<Employer> listEmployers = employerService.listAll();
+        model.addAttribute("listEmployers", listEmployers);
+        Jobs jobs = jobService.get(id);
+        model.addAttribute("jobs", jobs);
+        model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
+        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        return "jobs_form";
     }
 
     @GetMapping("/jobs/delete/{id}")
     public String deleteJobs(@PathVariable("id") Integer id, RedirectAttributes ra){
-        try {
-            jobService.delete(id);
-            ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
-        } catch (JobNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-        }
+        jobService.delete(id);
+        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
         return "redirect:/jobs";
     }
 

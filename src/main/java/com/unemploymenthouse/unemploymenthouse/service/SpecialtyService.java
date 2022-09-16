@@ -1,11 +1,11 @@
 package com.unemploymenthouse.unemploymenthouse.service;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
-import com.unemploymenthouse.unemploymenthouse.exception.SpecialtyNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.repository.SpecialtyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +22,22 @@ public class SpecialtyService {
         specialtyRepository.save(specialty);
     }
 
-    public Specialty get(Integer id) throws SpecialtyNotFoundException {
+    public Specialty get(Integer id) throws EntityNotFoundException {
         Optional<Specialty> result = specialtyRepository.findById(id);
-        if(result.isPresent()){
-            return result.get();
+        try{
+            if(result.isPresent()){
+                return result.get();
+            }
+            throw new EntityNotFoundException("Немає спеціальності з ID: " + id);
+        } catch (EntityNotFoundException e){
+            throw new RuntimeException();
         }
-        throw new SpecialtyNotFoundException("Немає спеціальності з ID: " + id);
     }
 
-    public void delete(Integer id) throws SpecialtyNotFoundException {
+    public void delete(Integer id) throws EntityNotFoundException {
         Long count = specialtyRepository.countByIdSpec(id);
         if(count == null || count == 0){
-            throw new SpecialtyNotFoundException("Немає спеціальності з ID: " + id);
+            throw new EntityNotFoundException("Немає спеціальності з ID: " + id);
         }
         specialtyRepository.deleteById(id);
     }

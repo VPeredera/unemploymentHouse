@@ -1,11 +1,16 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "employer")
+@Getter
+@Setter
 public class Employer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,63 +35,6 @@ public class Employer implements Serializable {
     @Column(name = "job_vacancies")
     private int jobVacancies;
 
-    @OneToMany(mappedBy = "employerJobs", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employerJobs", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Jobs> jobsEmployer;
-
-    public Integer getIdEmployer() {
-        return this.idEmployer;
-    }
-
-    public void setIdEmployer(Integer idEmployer) {
-        this.idEmployer = idEmployer;
-    }
-
-    public String getEmployerFullName() {
-        return this.employerFullName;
-    }
-
-    public void setEmployerFullName(String employerFullName) {
-        this.employerFullName = employerFullName;
-    }
-
-    public String getCompanyName() {
-        return this.companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getTypeOfActivity() {
-        return this.typeOfActivity;
-    }
-
-    public void setTypeOfActivity(String typeOfActivity) {
-        this.typeOfActivity = typeOfActivity;
-    }
-
-    public String getCompanyLocation() {
-        return this.companyLocation;
-    }
-
-    public void setCompanyLocation(String companyLocation) {
-        this.companyLocation = companyLocation;
-    }
-
-    public String getEmployerContact() {
-        return this.employerContact;
-    }
-
-    public void setEmployerContact(String employerContact) {
-        this.employerContact = employerContact;
-    }
-
-    public int getJobVacancies() {
-        return this.jobVacancies;
-    }
-
-    public void setJobVacancies(int jobVacancies) {
-        this.jobVacancies = jobVacancies;
-    }
 }

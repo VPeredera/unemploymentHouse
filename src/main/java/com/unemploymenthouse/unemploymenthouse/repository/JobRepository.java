@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface JobRepository extends CrudRepository<Jobs, Integer> {
-    public Long countByIdJob(Integer id);
+    Long countByIdJob(Integer id);
 
     @Transactional
     @Query(value = "SELECT * FROM jobs WHERE jobs.id_employer IN " +

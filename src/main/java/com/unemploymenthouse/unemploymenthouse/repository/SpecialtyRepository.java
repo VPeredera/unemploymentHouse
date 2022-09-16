@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface SpecialtyRepository extends CrudRepository<Specialty, Integer> {
-    public Long countByIdSpec(Integer id);
+    Long countByIdSpec(Integer id);
 
     @Transactional
     @Query(value = "SELECT * FROM specialty WHERE specialty.specialty_name LIKE %?1%", nativeQuery = true)

@@ -1,13 +1,11 @@
 package com.unemploymenthouse.unemploymenthouse.service;
 
-import com.unemploymenthouse.unemploymenthouse.domain.Jobs;
 import com.unemploymenthouse.unemploymenthouse.domain.Offers;
-import com.unemploymenthouse.unemploymenthouse.exception.JobNotFoundException;
-import com.unemploymenthouse.unemploymenthouse.exception.OfferNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.repository.OffersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,18 +21,22 @@ public class OffersService{
         offersRepository.save(offer);
     }
 
-    public Offers get(Integer id) throws OfferNotFoundException {
+    public Offers get(Integer id) throws EntityNotFoundException {
         Optional<Offers> result = offersRepository.findById(id);
-        if(result.isPresent()){
-            return result.get();
+        try{
+            if(result.isPresent()){
+                return result.get();
+            }
+            throw new EntityNotFoundException("Немає пропозицій з ID: " + id);
+        } catch (EntityNotFoundException e) {
+            throw new RuntimeException();
         }
-        throw new OfferNotFoundException("Немає пропозицій з ID: " + id);
     }
 
-    public void delete(Integer id) throws OfferNotFoundException {
+    public void delete(Integer id) throws EntityNotFoundException {
         Long count = offersRepository.countByIdOffer(id);
         if(count == null || count == 0){
-            throw new OfferNotFoundException("Немає пропозицій з ID: " + id);
+            throw new EntityNotFoundException("Немає пропозицій з ID: " + id);
         }
         offersRepository.deleteById(id);
     }

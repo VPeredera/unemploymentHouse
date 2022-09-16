@@ -1,11 +1,16 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "jobs")
+@Getter
+@Setter
 public class Jobs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,71 +40,6 @@ public class Jobs implements Serializable {
     @JoinColumn(name = "id_employer", nullable = false)
     private Employer employerJobs;
 
-    @OneToMany(mappedBy = "jobsOffer", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "jobsOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Offers> offersJob;
-
-    public Specialty getSpecialtyJobs() {
-        return specialtyJobs;
-    }
-
-    public void setSpecialtyJobs(Specialty specialtyJobs) {
-        this.specialtyJobs = specialtyJobs;
-    }
-
-    public Employer getEmployerJobs() {
-        return employerJobs;
-    }
-
-    public void setEmployerJobs(Employer employerJobs) {
-        this.employerJobs = employerJobs;
-    }
-
-    public Integer getIdJob() {
-        return this.idJob;
-    }
-
-    public void setIdJob(Integer idJob) {
-        this.idJob = idJob;
-    }
-
-    public String getJobTitle() {
-        return this.jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public String getRequirements() {
-        return this.requirements;
-    }
-
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
-
-    public String getPositionDescription() {
-        return this.positionDescription;
-    }
-
-    public void setPositionDescription(String positionDescription) {
-        this.positionDescription = positionDescription;
-    }
-
-    public double getSalary() {
-        return this.salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    public java.sql.Date getDateOfVacancy() {
-        return this.dateOfVacancy;
-    }
-
-    public void setDateOfVacancy(java.sql.Date dateOfVacancy) {
-        this.dateOfVacancy = dateOfVacancy;
-    }
 }

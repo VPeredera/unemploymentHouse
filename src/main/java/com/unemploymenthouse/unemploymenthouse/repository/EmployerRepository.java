@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface EmployerRepository extends CrudRepository<Employer, Integer> {
-    public Long countByIdEmployer(Integer id);
+    Long countByIdEmployer(Integer id);
 
     @Transactional
     @Query(value = "SELECT * FROM employer AS r WHERE EXISTS" +

@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ResumeRepository extends CrudRepository<Resume, Integer> {
-    public Long countByIdResume(Integer id);
+    Long countByIdResume(Integer id);
 
     @Transactional
     @Query(value = "SELECT * FROM resume WHERE resume.id_unemployed IN " +

@@ -1,4 +1,4 @@
-package com.unemploymenthouse.unemploymenthouse.domain;
+package com.unemploymenthouse.unemploymenthouse.login;
 
 import javax.persistence.*;
 import java.util.HashSet;

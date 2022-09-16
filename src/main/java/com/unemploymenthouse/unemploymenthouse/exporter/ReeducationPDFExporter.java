@@ -1,4 +1,4 @@
-package com.unemploymenthouse.unemploymenthouse.domain;
+package com.unemploymenthouse.unemploymenthouse.exporter;
 
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ReeducationPDFExporter {
-    private List<ReeducationAmount> listReeducation;
+    private final List<ReeducationAmount> listReeducation;
 
     public ReeducationPDFExporter(List<ReeducationAmount> listReeducation) {
         this.listReeducation = listReeducation;

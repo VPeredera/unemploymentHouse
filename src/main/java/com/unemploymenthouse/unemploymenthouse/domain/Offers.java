@@ -1,10 +1,15 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "offers")
+@Getter
+@Setter
 public class Offers implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,44 +29,4 @@ public class Offers implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_job", nullable = false)
     private Jobs jobsOffer;
-
-    public Integer getIdOffer() {
-        return this.idOffer;
-    }
-
-    public void setIdOffer(Integer idOffer) {
-        this.idOffer = idOffer;
-    }
-
-    public Unemployed getUnemployedOffer() {
-        return unemployedOffer;
-    }
-
-    public void setUnemployedOffer(Unemployed unemployedOffer) {
-        this.unemployedOffer = unemployedOffer;
-    }
-
-    public Jobs getJobsOffer() {
-        return jobsOffer;
-    }
-
-    public void setJobsOffer(Jobs jobsOffer) {
-        this.jobsOffer = jobsOffer;
-    }
-
-    public java.sql.Date getDateOffer() {
-        return this.dateOffer;
-    }
-
-    public void setDateOffer(java.sql.Date dateOffer) {
-        this.dateOffer = dateOffer;
-    }
-
-    public String getReplyOnOffer() {
-        return this.replyOnOffer;
-    }
-
-    public void setReplyOnOffer(String replyOnOffer) {
-        this.replyOnOffer = replyOnOffer;
-    }
 }

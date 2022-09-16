@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ReeducationRepository extends CrudRepository<Reeducation, Integer> {
-    public Long countByIdReeduc(Integer id);
+    Long countByIdReeduc(Integer id);
 
     @Transactional
     @Query("SELECT new com.unemploymenthouse.unemploymenthouse.query.ReeducationAmount(r.educInstitution, COUNT(r.idReeduc)) " +

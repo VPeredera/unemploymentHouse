@@ -1,5 +1,6 @@
-package com.unemploymenthouse.unemploymenthouse.domain;
+package com.unemploymenthouse.unemploymenthouse.login;
 
+import com.unemploymenthouse.unemploymenthouse.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

@@ -1,11 +1,11 @@
 package com.unemploymenthouse.unemploymenthouse.service;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Employer;
-import com.unemploymenthouse.unemploymenthouse.exception.EmployerNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.repository.EmployerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,18 +21,22 @@ public class EmployerService {
         employerRepository.save(employer);
     }
 
-    public Employer get(Integer id) throws EmployerNotFoundException {
+    public Employer get(Integer id) throws EntityNotFoundException {
         Optional<Employer> result = employerRepository.findById(id);
-        if(result.isPresent()){
-            return result.get();
+        try {
+            if(result.isPresent()){
+                return result.get();
+            }
+            throw new EntityNotFoundException("Немає роботодавців з ID: " + id);
+        } catch (EntityNotFoundException e){
+            throw new RuntimeException();
         }
-        throw new EmployerNotFoundException("Немає роботодавців з ID: " + id);
     }
 
-    public void delete(Integer id) throws EmployerNotFoundException {
+    public void delete(Integer id) throws EntityNotFoundException {
         Long count = employerRepository.countByIdEmployer(id);
         if(count == null || count == 0){
-            throw new EmployerNotFoundException("Немає роботодавців з ID: " + id);
+            throw new EntityNotFoundException("Немає роботодавців з ID: " + id);
         }
         employerRepository.deleteById(id);
     }

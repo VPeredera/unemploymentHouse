@@ -3,6 +3,9 @@ package com.unemploymenthouse.unemploymenthouse.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +15,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "reeducation")
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"unemployedReeduc", "specialtyReeducation"})
 public class Reeducation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,75 +46,6 @@ public class Reeducation implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_spec", nullable = false)
     private Specialty specialtyReeducation;
-
-    public void addUnemployed(Unemployed unemployed){
-        this.unemployedReeduc.add(unemployed);
-    }
-
-    public void removeUnemployed(Unemployed unemployed){
-        this.unemployedReeduc.remove(unemployed);
-    }
-
-    public Set<Unemployed> getUnemployedReeduc() {
-        return unemployedReeduc;
-    }
-
-    public void setUnemployedReeduc(Set<Unemployed> unemployedReeduc) {
-        this.unemployedReeduc = unemployedReeduc;
-    }
-
-    public Specialty getSpecialtyReeducation() {
-        return specialtyReeducation;
-    }
-
-    public void setSpecialtyReeducation(Specialty specialtyReeducation) {
-        this.specialtyReeducation = specialtyReeducation;
-    }
-
-    public Integer getIdReeduc() {
-        return this.idReeduc;
-    }
-
-    public void setIdReeduc(Integer idReeduc) {
-        this.idReeduc = idReeduc;
-    }
-
-    public String getEducInstitution() {
-        return this.educInstitution;
-    }
-
-    public void setEducInstitution(String educInstitution) {
-        this.educInstitution = educInstitution;
-    }
-
-    public java.sql.Date getStartDate() {
-        return this.startDate;
-    }
-
-    public void setStartDate(java.sql.Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public java.sql.Date getEndDate() {
-        return this.endDate;
-    }
-
-    public void setEndDate(java.sql.Date endDate) {
-        this.endDate = endDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Reeducation that = (Reeducation) o;
-        return idReeduc.equals(that.idReeduc);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idReeduc);
-    }
 
     @Override
     public String toString() {

@@ -1,9 +1,7 @@
 package com.unemploymenthouse.unemploymenthouse.web;
 
-import com.unemploymenthouse.unemploymenthouse.domain.Jobs;
 import com.unemploymenthouse.unemploymenthouse.domain.Resume;
 import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
-import com.unemploymenthouse.unemploymenthouse.exception.ResumeNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.repository.UnemployedRepository;
 import com.unemploymenthouse.unemploymenthouse.service.ResumeService;
 import com.unemploymenthouse.unemploymenthouse.service.UnemployedService;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
@@ -48,28 +47,19 @@ public class ResumeController {
 
     @GetMapping("/resume/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
-        try {
-            List<Unemployed> listUnemployed = UnemployedService.makeCollection(unemployedRepository.findAll());
-            model.addAttribute("listUnemployed", listUnemployed);
-            Resume resume = resumeService.get(id);
-            model.addAttribute("resume", resume);
-            model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-            ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
-            return "resume_form";
-        } catch (ResumeNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/resume";
-        }
+        List<Unemployed> listUnemployed = UnemployedService.makeCollection(unemployedRepository.findAll());
+        model.addAttribute("listUnemployed", listUnemployed);
+        Resume resume = resumeService.get(id);
+        model.addAttribute("resume", resume);
+        model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
+        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        return "resume_form";
     }
 
     @GetMapping("/resume/delete/{id}")
     public String deleteResume(@PathVariable("id") Integer id, RedirectAttributes ra){
-        try {
-            resumeService.delete(id);
-            ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
-        } catch (ResumeNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-        }
+        resumeService.delete(id);
+        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
         return "redirect:/resume";
     }
 

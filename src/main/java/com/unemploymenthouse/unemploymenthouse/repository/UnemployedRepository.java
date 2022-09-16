@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface UnemployedRepository extends CrudRepository<Unemployed, Integer> {
-    public Long countByIdUnemployed(Integer id);
+    Long countByIdUnemployed(Integer id);
 
     @Transactional
     @Query(value = "SELECT * FROM unemployed WHERE unemployed.full_name LIKE ?1%", nativeQuery = true)

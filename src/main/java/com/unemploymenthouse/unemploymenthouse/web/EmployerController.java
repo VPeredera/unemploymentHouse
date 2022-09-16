@@ -2,7 +2,6 @@ package com.unemploymenthouse.unemploymenthouse.web;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Employer;
 import com.unemploymenthouse.unemploymenthouse.domain.Resume;
-import com.unemploymenthouse.unemploymenthouse.exception.EmployerNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
@@ -43,26 +43,17 @@ public class EmployerController {
 
     @GetMapping("/employer/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
-        try {
-            Employer employer = employerService.get(id);
-            model.addAttribute("employer", employer);
-            model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-            ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
-            return "employer_form";
-        } catch (EmployerNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/employer";
-        }
+        Employer employer = employerService.get(id);
+        model.addAttribute("employer", employer);
+        model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
+        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        return "employer_form";
     }
 
     @GetMapping("/employer/delete/{id}")
     public String deleteEmployer(@PathVariable("id") Integer id, RedirectAttributes ra){
-        try {
-            employerService.delete(id);
-            ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
-        } catch (EmployerNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-        }
+        employerService.delete(id);
+        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
         return "redirect:/employer";
     }
 

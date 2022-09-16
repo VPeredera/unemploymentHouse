@@ -1,12 +1,12 @@
 package com.unemploymenthouse.unemploymenthouse.service;
 
 import com.unemploymenthouse.unemploymenthouse.domain.Reeducation;
-import com.unemploymenthouse.unemploymenthouse.exception.ReeducationNotFoundException;
 import com.unemploymenthouse.unemploymenthouse.query.ReeducationAmount;
 import com.unemploymenthouse.unemploymenthouse.repository.ReeducationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,18 +31,22 @@ public class ReeducationService {
         reeducationRepository.save(reeducation);
     }
 
-    public Reeducation get(Integer id) throws ReeducationNotFoundException {
+    public Reeducation get(Integer id) throws EntityNotFoundException {
         Optional<Reeducation> result = reeducationRepository.findById(id);
-        if(result.isPresent()){
-            return result.get();
+        try{
+            if(result.isPresent()){
+                return result.get();
+            }
+            throw new EntityNotFoundException("Немає перенавчання з ID: " + id);
+        } catch (EntityNotFoundException e){
+            throw new RuntimeException();
         }
-        throw new ReeducationNotFoundException("Немає перенавчання з ID: " + id);
     }
 
-    public void delete(Integer id) throws ReeducationNotFoundException {
+    public void delete(Integer id) throws EntityNotFoundException {
         Long count = reeducationRepository.countByIdReeduc(id);
         if(count == null || count == 0){
-            throw new ReeducationNotFoundException("Немає перенавчання з ID: " + id);
+            throw new EntityNotFoundException("Немає перенавчання з ID: " + id);
         }
         reeducationRepository.deleteById(id);
     }
