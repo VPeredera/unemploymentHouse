@@ -1,11 +1,8 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,7 +12,9 @@ import java.util.Set;
 @Table(name = "specialty")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude = {"unemployedSpec", "reeducationSpecialty", "jobsSpecialty"})
 public class Specialty implements Serializable {
     @Id

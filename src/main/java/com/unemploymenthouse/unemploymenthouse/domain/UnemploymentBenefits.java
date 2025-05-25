@@ -1,15 +1,17 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "unemployment_benefits")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UnemploymentBenefits implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

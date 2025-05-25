@@ -1,11 +1,14 @@
 package com.unemploymenthouse.unemploymenthouse.repository;
 
 import com.unemploymenthouse.unemploymenthouse.domain.UnemploymentBenefits;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
+@Repository
 public interface BenefitsRepository extends CrudRepository<UnemploymentBenefits, Integer> {
     Long countByIdBenefit(Integer id);
 

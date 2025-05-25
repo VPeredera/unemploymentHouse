@@ -1,11 +1,9 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,6 +13,9 @@ import java.util.Set;
 @Table(name = "unemployed")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude = {"reeducation", "specialties", "resumes", "benefits", "offersUnemployed"})
 public class Unemployed implements Serializable {
     @Id
@@ -51,10 +52,10 @@ public class Unemployed implements Serializable {
     @JoinTable(name = "unemployed_profession",
             joinColumns = {
                     @JoinColumn(name = "id_unemployed", referencedColumnName = "id_unemployed",
-                            nullable = false, updatable = false)},
+                            nullable = false, updatable = false, insertable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "id_spec", referencedColumnName = "id_spec",
-                            nullable = false, updatable = false)})
+                            nullable = false, updatable = false, insertable = false)})
     private Set<Specialty> specialties = new HashSet<>();
 
     @OneToMany(mappedBy = "unemployedResume", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

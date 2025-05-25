@@ -1,9 +1,8 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -11,6 +10,9 @@ import java.util.Set;
 @Table(name = "jobs")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Jobs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

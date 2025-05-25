@@ -3,9 +3,11 @@ package com.unemploymenthouse.unemploymenthouse.repository;
 import com.unemploymenthouse.unemploymenthouse.domain.Offers;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
+@Repository
 public interface OffersRepository extends CrudRepository<Offers, Integer> {
     Long countByIdOffer(Integer id);
 

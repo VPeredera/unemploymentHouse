@@ -34,7 +34,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername(){
-        return user.getUserName();
+        return user.getUsername();
     }
 
     @Override
@@ -54,6 +54,6 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled(){
-        return user.isEnabled();
+        return user.isEnable();
     }
 }
