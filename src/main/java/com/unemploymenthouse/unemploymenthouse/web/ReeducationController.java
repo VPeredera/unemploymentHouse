@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -26,9 +25,19 @@ import java.util.List;
 
 @Controller
 public class ReeducationController {
-    @Autowired private ReeducationService reeducationService;
-    @Autowired private SpecialtyService specialtyService;
-    @Autowired private UnemployedService unemployedService;
+    private final ReeducationService reeducationService;
+    private final SpecialtyService specialtyService;
+    private final UnemployedService unemployedService;
+
+    @Autowired
+    public ReeducationController(ReeducationService reeducationService, SpecialtyService specialtyService, UnemployedService unemployedService) {
+        this.reeducationService = reeducationService;
+        this.specialtyService = specialtyService;
+        this.unemployedService = unemployedService;
+    }
+
+    private static final String REEDUCATION_ATTRIBUTE_NAME = "reeducation";
+    private static final String MESSAGE_ATTRIBUTE_NAME = "message";
 
     @GetMapping("/reeducation")
     public String showReeducationList(Model model) {
@@ -36,7 +45,7 @@ public class ReeducationController {
         model.addAttribute("listReeducation", listReeducation);
         List<ReeducationAmount> listReeducationAmount = reeducationService.getAmountReeducation();
         model.addAttribute("listReeducationAmount", listReeducationAmount);
-        return "reeducation";
+        return REEDUCATION_ATTRIBUTE_NAME;
     }
 
     @GetMapping("/reeducation/new")
@@ -45,7 +54,7 @@ public class ReeducationController {
         model.addAttribute("listUnemployed", listUnemployed);
         List<Specialty> listSpecialties = specialtyService.listAll();
         model.addAttribute("listSpecialties", listSpecialties);
-        model.addAttribute("reeducation", new Reeducation());
+        model.addAttribute(REEDUCATION_ATTRIBUTE_NAME, new Reeducation());
         model.addAttribute("pageTitle", "Додати новий запис");
         return "reeducation_form";
     }
@@ -53,7 +62,7 @@ public class ReeducationController {
     @PostMapping("/reeducation/save")
     public String saveReeducation(Reeducation reeducation, RedirectAttributes ra) {
         reeducationService.save(reeducation);
-        ra.addFlashAttribute("message", "Запис успішно збережений.");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис успішно збережений.");
         return "redirect:/reeducation";
     }
 
@@ -64,16 +73,16 @@ public class ReeducationController {
         List<Specialty> listSpecialties = specialtyService.listAll();
         model.addAttribute("listSpecialties", listSpecialties);
         Reeducation reeducation = reeducationService.get(id);
-        model.addAttribute("reeducation", reeducation);
+        model.addAttribute(REEDUCATION_ATTRIBUTE_NAME, reeducation);
         model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис з ID " + id + " успішно змінений!");
         return "reeducation_form";
     }
 
     @GetMapping("/reeducation/delete/{id}")
     public String deleteReeducation(@PathVariable("id") Integer id, RedirectAttributes ra){
         reeducationService.delete(id);
-        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис з ID" + id + " успішно видалений!");
         return "redirect:/reeducation";
     }
 

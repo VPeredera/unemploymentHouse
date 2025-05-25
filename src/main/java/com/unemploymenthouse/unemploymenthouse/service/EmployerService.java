@@ -11,7 +11,12 @@ import java.util.Optional;
 
 @Service
 public class EmployerService {
-    @Autowired private EmployerRepository employerRepository;
+    private final EmployerRepository employerRepository;
+
+    @Autowired
+    public EmployerService(EmployerRepository employerRepository) {
+        this.employerRepository = employerRepository;
+    }
 
     public List<Employer> listAll() {
         return (List<Employer>) employerRepository.findAll();
@@ -29,7 +34,7 @@ public class EmployerService {
             }
             throw new EntityNotFoundException("Немає роботодавців з ID: " + id);
         } catch (EntityNotFoundException e){
-            throw new RuntimeException();
+            throw new EntityNotFoundException(e.getMessage());
         }
     }
 

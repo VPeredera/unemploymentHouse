@@ -9,27 +9,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
 public class EmployerController {
+    private final EmployerService employerService;
+
     @Autowired
-    private EmployerService employerService;
+    public EmployerController(EmployerService employerService) {
+        this.employerService = employerService;
+    }
+
+    private static final String LIST_ATTRIBUTE_NAME = "listEmployer";
+    private static final String EMPLOYER_ATTRIBUTE_NAME = "employer";
+    private static final String MESSAGE_ATTRIBUTE_NAME = "message";
 
     @GetMapping("/employer")
     public String showEmployerList(Model model){
         List<Employer> listEmployer = employerService.listAll();
-        model.addAttribute("listEmployer", listEmployer);
-        return "employer";
+        model.addAttribute(LIST_ATTRIBUTE_NAME, listEmployer);
+        return EMPLOYER_ATTRIBUTE_NAME;
     }
 
     @GetMapping("/employer/new")
     public String showNewForm(Model model) {
-        model.addAttribute("employer", new Employer());
+        model.addAttribute(EMPLOYER_ATTRIBUTE_NAME, new Employer());
         model.addAttribute("pageTitle", "Додати новий запис");
         return "employer_form";
     }
@@ -37,35 +43,35 @@ public class EmployerController {
     @PostMapping("/employer/save")
     public String saveEmployer(Employer employer, RedirectAttributes ra) {
         employerService.save(employer);
-        ra.addFlashAttribute("message", "Запис успішно збережений.");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис успішно збережений.");
         return "redirect:/employer";
     }
 
     @GetMapping("/employer/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         Employer employer = employerService.get(id);
-        model.addAttribute("employer", employer);
+        model.addAttribute(EMPLOYER_ATTRIBUTE_NAME, employer);
         model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис з ID " + id + " успішно змінений!");
         return "employer_form";
     }
 
     @GetMapping("/employer/delete/{id}")
     public String deleteEmployer(@PathVariable("id") Integer id, RedirectAttributes ra){
         employerService.delete(id);
-        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис з ID" + id + " успішно видалений!");
         return "redirect:/employer";
     }
 
-    @RequestMapping("/employer/notBigger")
-    public String findNotBigger(Resume resume, Model model, Integer amount){
+    @GetMapping("/employer/notBigger")
+    public String findNotBigger(Model model, Integer amount){
         if(amount != 0){
             List<Employer> listEmployer = employerService.getNotBigger(amount);
-            model.addAttribute("listEmployer", listEmployer);
+            model.addAttribute(LIST_ATTRIBUTE_NAME, listEmployer);
         } else {
             List<Employer> listEmployer = employerService.listAll();
-            model.addAttribute("listEmployer", listEmployer);
+            model.addAttribute(LIST_ATTRIBUTE_NAME, listEmployer);
         }
-        return "employer";
+        return EMPLOYER_ATTRIBUTE_NAME;
     }
 }

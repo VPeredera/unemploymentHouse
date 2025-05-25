@@ -1,14 +1,10 @@
 package com.unemploymenthouse.unemploymenthouse.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.unemploymenthouse.unemploymenthouse.domain.Specialty;
-import com.unemploymenthouse.unemploymenthouse.domain.Unemployed;
 import lombok.*;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity

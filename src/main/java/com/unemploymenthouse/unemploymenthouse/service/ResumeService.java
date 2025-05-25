@@ -11,7 +11,12 @@ import java.util.Optional;
 
 @Service
 public class ResumeService {
-    @Autowired private ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
+
+    @Autowired
+    public ResumeService(ResumeRepository resumeRepository) {
+        this.resumeRepository = resumeRepository;
+    }
 
     public List<Resume> listAll() {
         return (List<Resume>) resumeRepository.findAll();
@@ -29,7 +34,7 @@ public class ResumeService {
             }
             throw new EntityNotFoundException("Немає резюме з ID: " + id);
         } catch (EntityNotFoundException e){
-            throw new RuntimeException();
+            throw new EntityNotFoundException(e.getMessage());
         }
     }
 

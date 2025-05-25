@@ -11,28 +11,36 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
 public class ResumeController {
-    @Autowired private ResumeService resumeService;
-    @Autowired private UnemployedRepository unemployedRepository;
+    private final ResumeService resumeService;
+    private final UnemployedRepository unemployedRepository;
+
+    @Autowired
+    public ResumeController(ResumeService resumeService, UnemployedRepository unemployedRepository) {
+        this.resumeService = resumeService;
+        this.unemployedRepository = unemployedRepository;
+    }
+
+    private static final String LIST_ATTRIBUTE_NAME = "listResume";
+    private static final String RESUME_ATTRIBUTE_NAME = "resume";
+    private static final String MESSAGE_ATTRIBUTE_NAME = "message";
 
     @GetMapping("/resume")
     public String showResumeList(Model model) {
         List<Resume> listResume = resumeService.listAll();
-        model.addAttribute("listResume", listResume);
-        return "resume";
+        model.addAttribute(LIST_ATTRIBUTE_NAME, listResume);
+        return RESUME_ATTRIBUTE_NAME;
     }
 
     @GetMapping("/resume/new")
     public String showNewForm(Model model) {
         List<Unemployed> listUnemployed = UnemployedService.makeCollection(unemployedRepository.findAll());
-        model.addAttribute("resume", new Resume());
+        model.addAttribute(RESUME_ATTRIBUTE_NAME, new Resume());
         model.addAttribute("listUnemployed", listUnemployed);
         model.addAttribute("pageTitle", "Додати новий запис");
         return "resume_form";
@@ -41,7 +49,7 @@ public class ResumeController {
     @PostMapping("/resume/save")
     public String saveResume(Resume resume, RedirectAttributes ra) {
         resumeService.save(resume);
-        ra.addFlashAttribute("message", "Запис успішно збережений.");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис успішно збережений.");
         return "redirect:/resume";
     }
 
@@ -50,28 +58,28 @@ public class ResumeController {
         List<Unemployed> listUnemployed = UnemployedService.makeCollection(unemployedRepository.findAll());
         model.addAttribute("listUnemployed", listUnemployed);
         Resume resume = resumeService.get(id);
-        model.addAttribute("resume", resume);
+        model.addAttribute(RESUME_ATTRIBUTE_NAME, resume);
         model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис з ID " + id + " успішно змінений!");
         return "resume_form";
     }
 
     @GetMapping("/resume/delete/{id}")
     public String deleteResume(@PathVariable("id") Integer id, RedirectAttributes ra){
         resumeService.delete(id);
-        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис з ID" + id + " успішно видалений!");
         return "redirect:/resume";
     }
 
-    @RequestMapping("/resume/searchByName")
-    public String findByName(Resume resume, Model model, String fullName){
+    @GetMapping("/resume/searchByName")
+    public String findByName(Model model, String fullName){
         if(fullName != null){
             List<Resume> listResume = resumeService.getResumeByName(fullName);
-            model.addAttribute("listResume", listResume);
+            model.addAttribute(LIST_ATTRIBUTE_NAME, listResume);
         } else {
             List<Resume> listResume = resumeService.listAll();
-            model.addAttribute("listResume", listResume);
+            model.addAttribute(LIST_ATTRIBUTE_NAME, listResume);
         }
-        return "resume";
+        return RESUME_ATTRIBUTE_NAME;
     }
 }

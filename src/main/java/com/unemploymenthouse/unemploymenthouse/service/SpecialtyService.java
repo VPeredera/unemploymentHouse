@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Service
 public class SpecialtyService {
+    private final SpecialtyRepository specialtyRepository;
+
     @Autowired
-    private SpecialtyRepository specialtyRepository;
+    public SpecialtyService(SpecialtyRepository specialtyRepository) {
+        this.specialtyRepository = specialtyRepository;
+    }
 
     public List<Specialty> listAll() {
         return (List<Specialty>) specialtyRepository.findAll();
@@ -30,7 +34,7 @@ public class SpecialtyService {
             }
             throw new EntityNotFoundException("Немає спеціальності з ID: " + id);
         } catch (EntityNotFoundException e){
-            throw new RuntimeException();
+            throw new EntityNotFoundException(e.getMessage());
         }
     }
 

@@ -12,10 +12,15 @@ import java.util.Optional;
 
 @Service
 public class UnemployedService {
-    @Autowired private UnemployedRepository unemployedRepository;
+    private final UnemployedRepository unemployedRepository;
+
+    @Autowired
+    public UnemployedService(UnemployedRepository unemployedRepository) {
+        this.unemployedRepository = unemployedRepository;
+    }
 
     public static <E> List<E> makeCollection(Iterable<E> iter) {
-        List<E> list = new ArrayList<E>();
+        List<E> list = new ArrayList<>();
         for (E item : iter) {
             list.add(item);
         }
@@ -38,7 +43,7 @@ public class UnemployedService {
             }
             throw new EntityNotFoundException("Немає безробітних з ID: " + id);
         } catch (EntityNotFoundException e){
-            throw new RuntimeException();
+            throw new EntityNotFoundException(e.getMessage());
         }
     }
 

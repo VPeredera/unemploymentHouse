@@ -11,7 +11,12 @@ import java.util.Optional;
 
 @Service
 public class BenefitsService {
-    @Autowired private BenefitsRepository benefitsRepository;
+    private final BenefitsRepository benefitsRepository;
+
+    @Autowired
+    public BenefitsService(BenefitsRepository benefitsRepository) {
+        this.benefitsRepository = benefitsRepository;
+    }
 
     public List<UnemploymentBenefits> listAll() {
         return (List<UnemploymentBenefits>) benefitsRepository.findAll();
@@ -28,7 +33,7 @@ public class BenefitsService {
                 return result.get();
             } throw new EntityNotFoundException("Немає виплат з ID: " + id);
         } catch (EntityNotFoundException e){
-            throw new RuntimeException();
+            throw new EntityNotFoundException(e.getMessage());
         }
     }
 

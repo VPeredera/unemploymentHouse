@@ -13,10 +13,15 @@ import java.util.Optional;
 
 @Service
 public class ReeducationService {
-    @Autowired private ReeducationRepository reeducationRepository;
+    private final ReeducationRepository reeducationRepository;
+
+    @Autowired
+    public ReeducationService(ReeducationRepository reeducationRepository) {
+        this.reeducationRepository = reeducationRepository;
+    }
 
     public static <E> List<E> makeCollection(Iterable<E> iter) {
-        List<E> list = new ArrayList<E>();
+        List<E> list = new ArrayList<>();
         for (E item : iter) {
             list.add(item);
         }
@@ -39,7 +44,7 @@ public class ReeducationService {
             }
             throw new EntityNotFoundException("Немає перенавчання з ID: " + id);
         } catch (EntityNotFoundException e){
-            throw new RuntimeException();
+            throw new EntityNotFoundException(e.getMessage());
         }
     }
 

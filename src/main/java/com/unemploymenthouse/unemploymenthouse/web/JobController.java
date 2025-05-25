@@ -11,10 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -24,14 +22,24 @@ import java.util.List;
 
 @Controller
 public class JobController {
-    @Autowired private JobService jobService;
-    @Autowired private SpecialtyService specialtyService;
-    @Autowired private EmployerService employerService;
+    private final JobService jobService;
+    private final SpecialtyService specialtyService;
+    private final EmployerService employerService;
+
+    @Autowired
+    public JobController(JobService jobService, SpecialtyService specialtyService, EmployerService employerService) {
+        this.jobService = jobService;
+        this.specialtyService = specialtyService;
+        this.employerService = employerService;
+    }
+
+    private static final String LIST_ATTRIBUTE_NAME = "listJobs";
+    private static final String MESSAGE_ATTRIBUTE_NAME = "message";
 
     @GetMapping("/jobs")
     public String showJobsList(Model model) {
         List<Jobs> listJobs = jobService.listAll();
-        model.addAttribute("listJobs", listJobs);
+        model.addAttribute(LIST_ATTRIBUTE_NAME, listJobs);
         List<Jobs> listMaxSalary = jobService.getMaxSalaryJob();
         model.addAttribute("listMaxSalary", listMaxSalary);
         return "jobs";
@@ -51,7 +59,7 @@ public class JobController {
     @PostMapping("/jobs/save")
     public String saveJobs(Jobs jobs, RedirectAttributes ra) {
         jobService.save(jobs);
-        ra.addFlashAttribute("message", "Запис успішно збережений.");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис успішно збережений.");
         return "redirect:/jobs";
     }
 
@@ -64,37 +72,37 @@ public class JobController {
         Jobs jobs = jobService.get(id);
         model.addAttribute("jobs", jobs);
         model.addAttribute("pageTitle", "Редагувати запис (ID: " + id + ")");
-        ra.addFlashAttribute("message", "Запис з ID " + id + " успішно змінений!");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис з ID " + id + " успішно змінений!");
         return "jobs_form";
     }
 
     @GetMapping("/jobs/delete/{id}")
     public String deleteJobs(@PathVariable("id") Integer id, RedirectAttributes ra){
         jobService.delete(id);
-        ra.addFlashAttribute("message", "Запис з ID" + id + " успішно видалений!");
+        ra.addFlashAttribute(MESSAGE_ATTRIBUTE_NAME, "Запис з ID" + id + " успішно видалений!");
         return "redirect:/jobs";
     }
 
-    @RequestMapping("/jobs/searchByCompany")
-    public String findByCompany(Jobs jobs, Model model, String companyName){
+    @GetMapping("/jobs/searchByCompany")
+    public String findByCompany(Model model, String companyName){
         if(companyName != null){
             List<Jobs> listJobs = jobService.getJobsByCompany(companyName);
-            model.addAttribute("listJobs", listJobs);
+            model.addAttribute(LIST_ATTRIBUTE_NAME, listJobs);
         } else {
             List<Jobs> listJobs = jobService.listAll();
-            model.addAttribute("listJobs", listJobs);
+            model.addAttribute(LIST_ATTRIBUTE_NAME, listJobs);
         }
         return "jobs";
     }
 
-    @RequestMapping("/jobs/searchBySalary")
-    public String findBySalary(Jobs jobs, Model model, double salary1, double salary2){
+    @GetMapping("/jobs/searchBySalary")
+    public String findBySalary(Model model, double salary1, double salary2){
         if(salary1 != 0 && salary2 != 0){
             List<Jobs> listJobs = jobService.getJobsBySalary(salary1, salary2);
-            model.addAttribute("listJobs", listJobs);
+            model.addAttribute(LIST_ATTRIBUTE_NAME, listJobs);
         } else {
             List<Jobs> listJobs = jobService.listAll();
-            model.addAttribute("listJobs", listJobs);
+            model.addAttribute(LIST_ATTRIBUTE_NAME, listJobs);
         }
         return "jobs";
     }

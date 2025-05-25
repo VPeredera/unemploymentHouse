@@ -11,7 +11,12 @@ import java.util.Optional;
 
 @Service
 public class OffersService{
-    @Autowired public OffersRepository offersRepository;
+    public final OffersRepository offersRepository;
+
+    @Autowired
+    public OffersService(OffersRepository offersRepository) {
+        this.offersRepository = offersRepository;
+    }
 
     public List<Offers> listAll() {
         return (List<Offers>) offersRepository.findAll();
@@ -29,7 +34,7 @@ public class OffersService{
             }
             throw new EntityNotFoundException("Немає пропозицій з ID: " + id);
         } catch (EntityNotFoundException e) {
-            throw new RuntimeException();
+            throw new EntityNotFoundException(e.getMessage());
         }
     }
 

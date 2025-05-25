@@ -41,29 +41,25 @@ public class JobsPDFExporter {
     }
 
     public void export(HttpServletResponse response) throws IOException {
-        Document document = new Document(PageSize.A4);
-        PdfWriter.getInstance(document, response.getOutputStream());
+        try (Document document = new Document(PageSize.A4)) {
+            PdfWriter.getInstance(document, response.getOutputStream());
 
-        document.open();
+            document.open();
 
-        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setColor(Color.BLACK);
-        font.setSize(18);
+            Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+            font.setColor(Color.BLACK);
+            font.setSize(18);
 
-        Paragraph title = new Paragraph("List of biggest salary for each specialty", font);
-        title.setAlignment(Paragraph.ALIGN_CENTER);
-        document.add(title);
+            Paragraph title = new Paragraph("List of biggest salary for each specialty", font);
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
 
-        PdfPTable table = new PdfPTable(2);
-        table.setWidthPercentage(100);
-        table.setSpacingBefore(15);
-        table.setWidths(new float[] {3.5f, 1.5f});
+            PdfPTable table = FileConfiguration.tableFormat();
 
+            writeTableHeader(table);
+            writeTableData(table);
 
-        writeTableHeader(table);
-        writeTableData(table);
-
-        document.add(table);
-        document.close();
+            document.add(table);
+        }
     }
 }
